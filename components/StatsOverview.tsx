@@ -7,42 +7,57 @@ interface StatsOverviewProps {
   nextUpcomingCumDate: string | null;
 }
 
-export function StatsOverview({ stats, nextUpcomingCumDate }: StatsOverviewProps) {
+export function StatsOverview({
+  stats,
+  nextUpcomingCumDate,
+}: StatsOverviewProps) {
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Active Buy Windows</CardTitle>
+          <CardTitle className="text-sm font-medium">
+            Active Buy Windows
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">{stats.optimalCount}</div>
         </CardContent>
       </Card>
-      
+
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Approaching Windows</CardTitle>
+          <CardTitle className="text-sm font-medium">
+            Approaching Windows
+          </CardTitle>
         </CardHeader>
         <CardContent>
           <div className="text-2xl font-bold">{stats.approachingCount}</div>
         </CardContent>
       </Card>
-      
+
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Average Estimated Yield</CardTitle>
+          <CardTitle className="text-sm font-medium">
+            Average Estimated Yield
+          </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{stats.averageYield.toFixed(2)}%</div>
+          <div className="text-2xl font-bold">
+            {stats.averageYield.toFixed(2)}%
+          </div>
         </CardContent>
       </Card>
-      
+
       <Card>
         <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-          <CardTitle className="text-sm font-medium">Next Upcoming Cum Date</CardTitle>
+          <CardTitle className="text-sm font-medium">
+            Next Upcoming Cum Date
+          </CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="text-2xl font-bold">{nextUpcomingCumDate || "N/A"}</div>
+          <div className="text-2xl font-bold">
+            {nextUpcomingCumDate || "N/A"}
+          </div>
         </CardContent>
       </Card>
     </div>

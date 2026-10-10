@@ -47,14 +47,18 @@ export function FilterBar({ filters, onFilterChange }: FilterBarProps) {
     setSearchValue(e.target.value);
   };
 
-  const handleMinYieldChange = (value: number[]) => {
-    onFilterChange({ ...filters, minYield: value[0] });
-  };
-
-  const handleMonthChange = (value: string) => {
+  const handleMinYieldChange = (value: number | readonly number[]) => {
     onFilterChange({
       ...filters,
-      targetMonth: value === "ALL" ? "ALL" : parseInt(value, 10),
+      minYield: typeof value === "number" ? value : value[0],
+    });
+  };
+
+  const handleMonthChange = (value: string | null) => {
+    onFilterChange({
+      ...filters,
+      targetMonth:
+        value === null || value === "ALL" ? "ALL" : parseInt(value, 10),
     });
   };
 
@@ -93,7 +97,9 @@ export function FilterBar({ filters, onFilterChange }: FilterBarProps) {
         <div className="space-y-3">
           <div className="flex justify-between">
             <label className="text-sm font-medium">Minimum Yield</label>
-            <span className="text-sm text-muted-foreground">{filters.minYield}%</span>
+            <span className="text-sm text-muted-foreground">
+              {filters.minYield}%
+            </span>
           </div>
           <Slider
             value={[filters.minYield]}

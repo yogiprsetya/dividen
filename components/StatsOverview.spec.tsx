@@ -12,17 +12,19 @@ describe("StatsOverview", () => {
   };
 
   it("renders all KPI cards", () => {
-    render(<StatsOverview stats={mockStats} nextUpcomingCumDate="2023-10-15" />);
-    
+    render(
+      <StatsOverview stats={mockStats} nextUpcomingCumDate="2023-10-15" />,
+    );
+
     expect(screen.getByText(/Active Buy Windows/i)).toBeInTheDocument();
     expect(screen.getByText("15")).toBeInTheDocument();
-    
+
     expect(screen.getByText(/Approaching Windows/i)).toBeInTheDocument();
     expect(screen.getByText("10")).toBeInTheDocument();
-    
+
     expect(screen.getByText(/Average Estimated Yield/i)).toBeInTheDocument();
     expect(screen.getByText("5.50%")).toBeInTheDocument();
-    
+
     expect(screen.getByText(/Next Upcoming Cum Date/i)).toBeInTheDocument();
     expect(screen.getByText("2023-10-15")).toBeInTheDocument();
   });

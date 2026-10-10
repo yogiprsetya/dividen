@@ -36,23 +36,26 @@ export function Dropzone({
     setIsDragging(false);
   }, []);
 
-  const processFile = useCallback(async (file: File) => {
-    setError(null);
-    if (!file.name.endsWith(".csv")) {
-      setError("Please upload a valid CSV file.");
-      return;
-    }
+  const processFile = useCallback(
+    async (file: File) => {
+      setError(null);
+      if (!file.name.endsWith(".csv")) {
+        setError("Please upload a valid CSV file.");
+        return;
+      }
 
-    try {
-      const text = await file.text();
-      const result = parseStockbitCsv(text);
-      onDataLoaded(result);
-    } catch (err) {
-      setError(
-        err instanceof Error ? err.message : "Failed to parse CSV file.",
-      );
-    }
-  }, [onDataLoaded]);
+      try {
+        const text = await file.text();
+        const result = parseStockbitCsv(text);
+        onDataLoaded(result);
+      } catch (err) {
+        setError(
+          err instanceof Error ? err.message : "Failed to parse CSV file.",
+        );
+      }
+    },
+    [onDataLoaded],
+  );
 
   const handleDrop = useCallback(
     (e: React.DragEvent) => {
