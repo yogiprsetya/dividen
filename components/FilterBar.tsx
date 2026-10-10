@@ -43,10 +43,6 @@ export function FilterBar({ filters, onFilterChange }: FilterBarProps) {
     }
   }, [debouncedSearchValue, filters, onFilterChange]);
 
-  useEffect(() => {
-    setSearchValue(filters.searchQuery);
-  }, [filters.searchQuery]);
-
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchValue(e.target.value);
   };

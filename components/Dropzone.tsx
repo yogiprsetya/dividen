@@ -36,7 +36,7 @@ export function Dropzone({
     setIsDragging(false);
   }, []);
 
-  const processFile = async (file: File) => {
+  const processFile = useCallback(async (file: File) => {
     setError(null);
     if (!file.name.endsWith(".csv")) {
       setError("Please upload a valid CSV file.");
@@ -52,7 +52,7 @@ export function Dropzone({
         err instanceof Error ? err.message : "Failed to parse CSV file.",
       );
     }
-  };
+  }, [onDataLoaded]);
 
   const handleDrop = useCallback(
     (e: React.DragEvent) => {
@@ -63,7 +63,7 @@ export function Dropzone({
         processFile(e.dataTransfer.files[0]);
       }
     },
-    [onDataLoaded],
+    [processFile],
   );
 
   const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
