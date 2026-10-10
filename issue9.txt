@@ -1,0 +1,18 @@
+### Context
+Build accessible, performant UI primitive components using Base UI / Shadcn patterns with Tailwind CSS v4 and Lucide React icons. Set up responsive app header, footer, and theme styling.
+
+### Phase
+Phase 3: Screener UI & User Experience
+
+### Acceptance Criteria
+- [ ] UI primitives in `components/ui/`: `Button`, `Badge`, `Card`, `Input`, `Slider`, `Dialog`, `Tabs`, `Tooltip`.
+- [ ] Theme setup in `app/globals.css` with dark/light mode token definitions.
+- [ ] Modern header and navigation structure in `app/layout.tsx`.
+- [ ] Lucide icons integrated for status badges, upload, download, and copy actions.
+
+### Verification
+Components render cleanly without console or hydration errors.
+
+### Blockers
+Blocked by #7
+
