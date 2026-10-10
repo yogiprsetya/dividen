@@ -15,6 +15,7 @@ import type {
 export * from "./types";
 export * from "./normalizers";
 export * from "./csv-reader";
+export * from "./sample-data";
 
 interface ColumnIndexes {
   ticker?: number;
