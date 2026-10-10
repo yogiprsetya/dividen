@@ -13,13 +13,12 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 - Do not add speculative features, dashboards, or CMS integrations.
 - Do not use generic AI templates or unrelated design systems.
 - Do not introduce new page routes without adding them to `app/sitemap.ts`.
-- Avoid new heavy animation libraries; use the existing `motion` stack.
 - Do not make a commit, let me check all changes manually
 - Dont export a variable if not used in another files
 
 ## Always
 
-- Write descriptive commit message after task success using `-F`, print full commit script, example:
+- Dont make a commit, Write descriptive commit message after task success using `-F`, print full commit script, example:
 
   ```git
   git commit -F - <<'MSG'
@@ -27,7 +26,7 @@ This block is written and re-added by `next dev` — verify at `node_modules/nex
 
    <1-3 sentence body: what changed and why>
 
-   Task: <task number from .docs/todo.md>
+   Task: gh issue links
    MSG
   ```
 
