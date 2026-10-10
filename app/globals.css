@@ -23,6 +23,9 @@
   --color-chart-3: var(--chart-3);
   --color-chart-2: var(--chart-2);
   --color-chart-1: var(--chart-1);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-danger: var(--danger);
   --color-ring: var(--ring);
   --color-input: var(--input);
   --color-border: var(--border);
@@ -67,9 +70,14 @@
   --border: oklch(0.92 0.004 286.32);
   --input: oklch(0.92 0.004 286.32);
   --ring: oklch(0.705 0.015 286.067);
-  --chart-1: oklch(0.871 0.006 286.286);
-  --chart-2: oklch(0.552 0.016 285.938);
-  --chart-3: oklch(0.442 0.017 285.786);
+  /* Verified >= 4.5:1 on --background oklch(1 0 0). See app/globals.spec.ts.
+     Hue 65 not 85: yellow cannot clear AA on white at usable chroma. */
+  --success: oklch(0.52 0.12 150);
+  --warning: oklch(0.55 0.12 65);
+  --danger: oklch(0.52 0.17 27.325);
+  --chart-1: oklch(0.58 0.11 150);
+  --chart-2: oklch(0.6 0.12 65);
+  --chart-3: oklch(0.55 0.05 285);
   --chart-4: oklch(0.37 0.013 285.805);
   --chart-5: oklch(0.274 0.006 286.033);
   --radius: 0.625rem;
@@ -102,9 +110,13 @@
   --border: oklch(1 0 0 / 10%);
   --input: oklch(1 0 0 / 15%);
   --ring: oklch(0.552 0.016 285.938);
-  --chart-1: oklch(0.871 0.006 286.286);
-  --chart-2: oklch(0.552 0.016 285.938);
-  --chart-3: oklch(0.442 0.017 285.786);
+  /* Verified >= 4.5:1 on --background oklch(0.141 0.005 285.823). */
+  --success: oklch(0.74 0.13 150);
+  --warning: oklch(0.78 0.13 65);
+  --danger: oklch(0.65 0.17 27.325);
+  --chart-1: oklch(0.72 0.12 150);
+  --chart-2: oklch(0.76 0.12 65);
+  --chart-3: oklch(0.7 0.04 285);
   --chart-4: oklch(0.37 0.013 285.805);
   --chart-5: oklch(0.274 0.006 286.033);
   --sidebar: oklch(0.21 0.006 285.885);
