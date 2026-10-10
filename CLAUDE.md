@@ -1,33 +1,31 @@
 # CLAUDE.md — dividen
 
-## Things to avoid
+## Constraints
 
-- Do not add speculative features, dashboards, or CMS integrations.
-- Do not use generic AI templates or unrelated design systems.
-- Do not introduce new page routes without adding them to `app/sitemap.ts`.
-- Do not make a commit, let me check all changes manually
-- Dont export a variable if not used in another files
+- No speculative features, dashboards, or CMS integrations.
+- Only export a symbol if another file imports it.
+- Do not create files unrelated to the current task.
+- Do not post duplicate comments on GitHub issues; check existing comments first.
+- Never run `git commit`. I review all changes manually.
 
 ## Always
 
-- Dont make a commit, Write descriptive commit message after task success using `-F`, print full commit script, example:
+- Think before coding: state assumptions, and ask when the request is ambiguous.
+- Simplicity first: write the minimum code that solves the problem.
+- Surgical changes: touch only what the task requires and match the existing style.
+- Goal-driven execution: define how success is verified, then loop until it passes.
+- Add or update tests next to the code as `*.spec.ts` or `*.spec.tsx`.
+- When a task succeeds, do not commit. Print the full commit command with a descriptive message instead, using this format:
 
-  ```git
+```bash
   git commit -F - <<'MSG'
-   <type>(<scope>): <concise subject, imperative mood, ≤72 chars>
+  <type>(<scope>): <concise subject, imperative mood, ≤72 chars>
 
-   <1-3 sentence body: what changed and why>
+  <1-3 sentence body: what changed and why>
 
-   Task: gh issue links
-   MSG
-  ```
-
-- Work like L7 senior software developer
-- Think Before Coding
-- Simplicity First
-- Surgical Changes
-- Goal-Driven Execution
-- Write test -> `*.spec.tsx|ts`
+  Task: <gh issue link>
+  MSG
+```
 
 <!-- BEGIN:nextjs-agent-rules -->
 
