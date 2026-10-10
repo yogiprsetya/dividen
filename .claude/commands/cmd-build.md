@@ -1,5 +1,4 @@
 ---
-name: cmd-build
 description: Implement tasks incrementally — build, test, verify, write commit message.
 ---
 
@@ -18,8 +17,8 @@ Workflow — Implement the next pending task, then stop (careful, one slice at a
    - Run `gh issue list --label task --state open --json number,title,labels,body --limit 100`.
    - Next pending = lowest phase, then lowest number, whose every "Blocked by #N" issue is either closed or labeled `verify` (check with `gh issue view N --json state,labels`). If the user named an issue number, use that one instead.
    - If nothing is unblocked, report what is blocking and stop.
-1. Print issue number + title + acceptance criteria (from the issue body) + rename session. Also read `gh issue view N --comments`: if the task was sent back from review, the feedback there is part of the requirements.
-2. Load relevant context (existing code, patterns, types, parent plan issue)
+1. Rename session. Also read `gh issue view N --comments`: if the task was sent back from review, the feedback there is part of the requirements.
+2. Load relevant context (existing code, patterns, types, parent plan issue), dont create file related context
 3. RED: write failing test for expected behavior
 4. GREEN: implement minimum code to pass
 5. Run full test suite — check regressions

@@ -1,5 +1,4 @@
 ---
-name: cmd-spec
 description: Start spec-driven development — write a structured specification before writing code
 ---
 
