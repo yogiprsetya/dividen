@@ -1,5 +1,11 @@
 import React, { useCallback, useState } from "react";
-import { UploadCloud, FileText, AlertCircle, X, CheckCircle2 } from "lucide-react";
+import {
+  UploadCloud,
+  FileText,
+  AlertCircle,
+  X,
+  CheckCircle2,
+} from "lucide-react";
 import { Button } from "./ui/button";
 import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import { parseStockbitCsv } from "../lib/parser";
@@ -12,7 +18,11 @@ interface DropzoneProps {
   onClear?: () => void;
 }
 
-export function Dropzone({ onDataLoaded, currentData, onClear }: DropzoneProps) {
+export function Dropzone({
+  onDataLoaded,
+  currentData,
+  onClear,
+}: DropzoneProps) {
   const [isDragging, setIsDragging] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -38,7 +48,9 @@ export function Dropzone({ onDataLoaded, currentData, onClear }: DropzoneProps) 
       const result = parseStockbitCsv(text);
       onDataLoaded(result);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to parse CSV file.");
+      setError(
+        err instanceof Error ? err.message : "Failed to parse CSV file.",
+      );
     }
   };
 
@@ -46,12 +58,12 @@ export function Dropzone({ onDataLoaded, currentData, onClear }: DropzoneProps) 
     (e: React.DragEvent) => {
       e.preventDefault();
       setIsDragging(false);
-      
+
       if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
         processFile(e.dataTransfer.files[0]);
       }
     },
-    [onDataLoaded]
+    [onDataLoaded],
   );
 
   const handleFileInput = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -75,7 +87,8 @@ export function Dropzone({ onDataLoaded, currentData, onClear }: DropzoneProps) 
             <div>
               <p className="font-medium">Data Loaded Successfully</p>
               <p className="text-sm text-muted-foreground">
-                {currentData.validRows} rows loaded ({currentData.skippedRows} skipped)
+                {currentData.validRows} rows loaded ({currentData.skippedRows}{" "}
+                skipped)
               </p>
             </div>
           </div>
@@ -122,14 +135,18 @@ export function Dropzone({ onDataLoaded, currentData, onClear }: DropzoneProps) 
           className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
           aria-label="Upload CSV file"
         />
-        
+
         <div className="flex flex-col items-center text-center space-y-4 pointer-events-none">
           <div className="p-4 bg-muted rounded-full">
             <UploadCloud className="w-8 h-8 text-muted-foreground" />
           </div>
           <div>
-            <p className="text-lg font-medium">Drag & drop your Stockbit CSV here</p>
-            <p className="text-sm text-muted-foreground mt-1">or click to browse files</p>
+            <p className="text-lg font-medium">
+              Drag & drop your Stockbit CSV here
+            </p>
+            <p className="text-sm text-muted-foreground mt-1">
+              or click to browse files
+            </p>
           </div>
         </div>
       </div>
@@ -144,12 +161,18 @@ export function Dropzone({ onDataLoaded, currentData, onClear }: DropzoneProps) 
 
       <div className="flex items-center justify-center space-x-4">
         <div className="h-px bg-border flex-1" />
-        <span className="text-sm text-muted-foreground uppercase tracking-wider">or</span>
+        <span className="text-sm text-muted-foreground uppercase tracking-wider">
+          or
+        </span>
         <div className="h-px bg-border flex-1" />
       </div>
 
       <div className="flex justify-center">
-        <Button variant="secondary" onClick={handleLoadDemo} className="w-full sm:w-auto">
+        <Button
+          variant="secondary"
+          onClick={handleLoadDemo}
+          className="w-full sm:w-auto"
+        >
           <FileText className="w-4 h-4 mr-2" />
           Load Demo Data
         </Button>
