@@ -36,7 +36,7 @@ export function exportOpportunitiesToCSV(
       escapeCSVField(opp.companyName),
       escapeCSVField(opp.currentPrice),
       escapeCSVField(opp.estimatedNextCumDate),
-      escapeCSVField(opp.projectedYieldPercent.toFixed(2)),
+      escapeCSVField(opp.estimatedYield.toFixed(2)),
       escapeCSVField(opp.daysToCumDate),
       escapeCSVField(opp.windowStatus),
       escapeCSVField(opp.historicalConsistency),
