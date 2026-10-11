@@ -34,4 +34,18 @@ describe("StatsOverview", () => {
     expect(screen.getByText(/Next Upcoming Cum Date/i)).toBeInTheDocument();
     expect(screen.getByText("N/A")).toBeInTheDocument();
   });
+
+  it("renders a single empty-state line when nothing is tracked", () => {
+    const empty: SummaryStats = {
+      totalTracked: 0,
+      optimalCount: 0,
+      approachingCount: 0,
+      averageYield: 0,
+    };
+    render(<StatsOverview stats={empty} nextUpcomingCumDate={null} />);
+
+    expect(screen.getByText("No data loaded")).toBeInTheDocument();
+    expect(screen.queryByText(/Active Buy Windows/i)).not.toBeInTheDocument();
+    expect(screen.queryByText("N/A")).not.toBeInTheDocument();
+  });
 });

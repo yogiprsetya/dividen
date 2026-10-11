@@ -11,6 +11,10 @@ export function StatsOverview({
   stats,
   nextUpcomingCumDate,
 }: StatsOverviewProps) {
+  if (stats.totalTracked === 0) {
+    return <p className="text-sm text-muted-foreground">No data loaded</p>;
+  }
+
   return (
     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
       <Card>
