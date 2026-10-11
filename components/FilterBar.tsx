@@ -78,7 +78,7 @@ export function FilterBar({ filters, onFilterChange }: FilterBarProps) {
   };
 
   return (
-    <div className="space-y-4 p-4 bg-card rounded-lg border shadow-sm">
+    <div className="space-y-4 p-4 bg-card ring-1 ring-foreground/5">
       <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
         <div className="flex-1 w-full md:max-w-sm">
           <Input

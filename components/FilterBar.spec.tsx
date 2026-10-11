@@ -64,4 +64,12 @@ describe("FilterBar", () => {
 
     expect(onFilterChange).toHaveBeenCalledWith(defaultFilters);
   });
+
+  it("renders the container without radius or shadow", () => {
+    const { container } = render(
+      <FilterBar filters={defaultFilters} onFilterChange={vi.fn()} />,
+    );
+    const root = container.firstElementChild as HTMLElement;
+    expect(root.className).not.toMatch(/rounded-lg|shadow-sm/);
+  });
 });
