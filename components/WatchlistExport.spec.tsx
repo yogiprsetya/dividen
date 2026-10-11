@@ -1,4 +1,4 @@
-import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor, act } from "@testing-library/react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { WatchlistExport } from "./WatchlistExport";
 import type { RadarOpportunity } from "@/lib/engine/types";
@@ -40,6 +40,30 @@ describe("WatchlistExport", () => {
 
     await waitFor(() => expect(writeText).toHaveBeenCalledWith("ASII,BBCA,BBRI"));
     expect(await screen.findByRole("status")).toHaveTextContent("Copied 3 tickers");
+  });
+
+  it("clears the status message 3000 ms after it is set", async () => {
+    vi.useFakeTimers();
+    try {
+      render(<WatchlistExport opportunities={opportunities} />);
+
+      await act(async () => {
+        fireEvent.click(screen.getByRole("button", { name: /copy tickers/i }));
+      });
+      expect(screen.getByRole("status")).toHaveTextContent("Copied 3 tickers");
+
+      act(() => {
+        vi.advanceTimersByTime(2999);
+      });
+      expect(screen.getByRole("status")).toHaveTextContent("Copied 3 tickers");
+
+      act(() => {
+        vi.advanceTimersByTime(1);
+      });
+      expect(screen.getByRole("status")).toBeEmptyDOMElement();
+    } finally {
+      vi.useRealTimers();
+    }
   });
 
   it("reports failure when the clipboard is unavailable", async () => {

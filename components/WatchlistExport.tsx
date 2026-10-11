@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
 import type { RadarOpportunity } from "@/lib/engine/types";
 import { buildWatchlistClipboard, exportOpportunitiesToCSV } from "@/lib/utils/export";
+
+const MESSAGE_TIMEOUT_MS = 3000;
 
 interface WatchlistExportProps {
   opportunities: RadarOpportunity[];
@@ -11,6 +13,12 @@ interface WatchlistExportProps {
 export function WatchlistExport({ opportunities }: WatchlistExportProps) {
   const [message, setMessage] = useState("");
   const isEmpty = opportunities.length === 0;
+
+  useEffect(() => {
+    if (!message) return;
+    const timeout = setTimeout(() => setMessage(""), MESSAGE_TIMEOUT_MS);
+    return () => clearTimeout(timeout);
+  }, [message]);
 
   const copyTickers = async () => {
     const tickers = buildWatchlistClipboard(opportunities);
