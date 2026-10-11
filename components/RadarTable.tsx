@@ -138,13 +138,16 @@ export function RadarTable({ opportunities }: RadarTableProps) {
                 {sortHeader("ticker", "Symbol")}
               </th>
               <th scope="col" className="p-2">Status</th>
+              <th scope="col" className="p-2">Price</th>
               <th scope="col" className="p-2">Est. Cum Date</th>
               <th scope="col" aria-sort={ariaSort("daysToCumDate")} className="p-2">
                 {sortHeader("daysToCumDate", "Days to Cum Date")}
               </th>
+              <th scope="col" className="p-2">Est. DPS</th>
               <th scope="col" aria-sort={ariaSort("yield")} className="p-2">
                 {sortHeader("yield", "Est. Yield")}
               </th>
+              <th scope="col" className="p-2">Consistency</th>
               <th scope="col" className="p-2">Historical Payouts</th>
             </tr>
           </thead>
@@ -159,6 +162,7 @@ export function RadarTable({ opportunities }: RadarTableProps) {
                       <div className="text-xs text-muted-foreground">{opp.companyName}</div>
                     </td>
                     <td className="p-3"><StatusBadge status={opp.windowStatus} /></td>
+                    <td className="p-3">{formatCurrency(opp.currentPrice)}</td>
                     <td className="p-3">{formatDateIndonesian(opp.estimatedNextCumDate)}</td>
                     <td className="p-3">
                       {opp.daysToCumDate}
@@ -168,7 +172,9 @@ export function RadarTable({ opportunities }: RadarTableProps) {
                         </div>
                       )}
                     </td>
+                    <td className="p-3">{formatCurrency(opp.estimatedDividendPerShare)}</td>
                     <td className="p-3">{formatPercent(opp.estimatedYield)}</td>
+                    <td className="p-3">{Math.round(opp.historicalConsistency)}/100</td>
                     <td className="p-3">
                       <HistoryToggle
                         opportunity={opp}
@@ -179,7 +185,7 @@ export function RadarTable({ opportunities }: RadarTableProps) {
                   </tr>
                   {isExpanded && (
                     <tr className="bg-muted/30">
-                      <td colSpan={6} className="p-3">
+                      <td colSpan={9} className="p-3">
                         <HistoryDetails opportunity={opp} />
                       </td>
                     </tr>
@@ -215,6 +221,18 @@ export function RadarTable({ opportunities }: RadarTableProps) {
                 <div>
                   <dt className="text-xs text-muted-foreground">Est. Yield</dt>
                   <dd>{formatPercent(opp.estimatedYield)}</dd>
+                </div>
+                <div>
+                  <dt className="text-xs text-muted-foreground">Price</dt>
+                  <dd>{formatCurrency(opp.currentPrice)}</dd>
+                </div>
+                <div>
+                  <dt className="text-xs text-muted-foreground">Est. DPS</dt>
+                  <dd>{formatCurrency(opp.estimatedDividendPerShare)}</dd>
+                </div>
+                <div>
+                  <dt className="text-xs text-muted-foreground">Consistency</dt>
+                  <dd>{Math.round(opp.historicalConsistency)}/100</dd>
                 </div>
               </dl>
               <HistoryToggle

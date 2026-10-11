@@ -2,6 +2,7 @@ import { render, screen, fireEvent, within } from "@testing-library/react";
 import { describe, it, expect } from "vitest";
 import { RadarTable } from "./RadarTable";
 import type { RadarOpportunity } from "@/lib/engine/types";
+import { formatCurrency } from "@/lib/utils/format";
 
 function makeOpportunity(overrides: Partial<RadarOpportunity>): RadarOpportunity {
   return {
@@ -138,5 +139,44 @@ describe("RadarTable", () => {
     const label = within(screen.getByRole("table")).getByText("In Window");
     expect(label.className).not.toMatch(/text-(success|warning|danger|green|yellow|red)/);
     expect(label.querySelector("svg")?.getAttribute("class")).toMatch(/text-success/);
+  });
+
+  it("shows price, estimated DPS and consistency without expanding a row, on desktop and mobile", () => {
+    const opp = makeOpportunity({
+      ticker: "UNVR",
+      currentPrice: 2345,
+      estimatedDividendPerShare: 67,
+      historicalConsistency: 82.4,
+    });
+    render(<RadarTable opportunities={[opp]} />);
+    const table = screen.getByRole("table");
+    const cards = screen.getByTestId("radar-cards");
+    const price = formatCurrency(2345);
+    const dps = formatCurrency(67);
+
+    for (const name of [/Price/i, /Est\. DPS/i, /Consistency/i]) {
+      expect(within(table).getByRole("columnheader", { name })).toBeInTheDocument();
+    }
+    const headers = within(table).getAllByRole("columnheader").map((h) => h.textContent ?? "");
+    expect(headers).toHaveLength(9);
+    expect(headers[2]).toMatch(/Price/);
+    expect(headers[5]).toMatch(/Est\. DPS/);
+    expect(headers[7]).toMatch(/Consistency/);
+
+    const cells = within(within(table).getAllByRole("row")[1]).getAllByRole("cell");
+    expect(cells[2]).toHaveTextContent(price);
+    expect(cells[5]).toHaveTextContent(dps);
+    expect(cells[7]).toHaveTextContent("82/100");
+
+    expect(within(cards).getByText("Price").nextSibling).toHaveTextContent(price);
+    expect(within(cards).getByText("Est. DPS").nextSibling).toHaveTextContent(dps);
+    expect(within(cards).getByText("Consistency").nextSibling).toHaveTextContent("82/100");
+  });
+
+  it("spans the expanded history row across all nine columns", () => {
+    render(<RadarTable opportunities={[opportunities[1]]} />);
+    const table = screen.getByRole("table");
+    fireEvent.click(within(table).getByRole("button", { name: /Show history for ASII/i }));
+    expect(within(table).getByText("2025").closest("td")).toHaveAttribute("colspan", "9");
   });
 });
