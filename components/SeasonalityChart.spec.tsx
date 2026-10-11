@@ -1,5 +1,5 @@
 import { render, screen, within } from "@testing-library/react";
-import { describe, it, expect } from "vitest";
+import { afterEach, describe, it, expect, vi } from "vitest";
 import { SeasonalityChart } from "./SeasonalityChart";
 import type { RadarOpportunity } from "@/lib/engine/types";
 
@@ -25,6 +25,10 @@ function month(name: string) {
 }
 
 describe("SeasonalityChart", () => {
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
   it("renders twelve months", () => {
     render(<SeasonalityChart opportunities={[]} />);
     expect(screen.getAllByRole("listitem")).toHaveLength(12);
@@ -66,5 +70,39 @@ describe("SeasonalityChart", () => {
   it("shows an empty message when there are no opportunities", () => {
     render(<SeasonalityChart opportunities={[]} />);
     expect(screen.getByText(/no dividend events/i)).toBeInTheDocument();
+  });
+
+  it("marks the current month only", () => {
+    vi.useFakeTimers({ toFake: ["Date"] });
+    vi.setSystemTime(new Date("2026-06-15T12:00:00"));
+    render(<SeasonalityChart opportunities={[]} />);
+
+    expect(within(month("Juni")).getByText("Juni")).toHaveClass("border-b-2", "border-foreground");
+    expect(within(month("Mei")).getByText("Mei")).not.toHaveClass("border-b-2");
+    expect(screen.getByText(/today/i)).toBeInTheDocument();
+  });
+
+  it("draws buy window bars with --chart-1 and cum date bars with --chart-2", () => {
+    const { container } = render(
+      <SeasonalityChart opportunities={[makeOpportunity("ASII", "2026-06-10")]} />,
+    );
+
+    expect(container.querySelector(".bg-chart-1")).not.toBeNull();
+    expect(container.querySelector(".bg-chart-2")).not.toBeNull();
+  });
+
+  it("separates tickers with a dot, but not before the first", () => {
+    render(
+      <SeasonalityChart
+        opportunities={[
+          makeOpportunity("ASII", "2026-06-10"),
+          makeOpportunity("BBCA", "2026-06-20"),
+        ]}
+      />,
+    );
+
+    const items = within(month("Juni")).getAllByText(/ASII|BBCA/);
+    expect(items[0]).not.toHaveTextContent("·");
+    expect(items[1]).toHaveTextContent("· BBCA");
   });
 });
