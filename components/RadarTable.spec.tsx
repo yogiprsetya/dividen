@@ -112,4 +112,31 @@ describe("RadarTable", () => {
     render(<RadarTable opportunities={[]} />);
     expect(screen.getByText(/No opportunities match/i)).toBeInTheDocument();
   });
+
+  it("shows a caret on the active sort column whose direction follows the sort state", () => {
+    render(<RadarTable opportunities={opportunities} />);
+    const table = screen.getByRole("table");
+    const yieldHeader = within(table).getByRole("columnheader", { name: /Est\. Yield/i });
+    const symbolHeader = within(table).getByRole("columnheader", { name: /Symbol/i });
+
+    expect(yieldHeader).toHaveAttribute("aria-sort", "descending");
+    expect(yieldHeader.querySelector("svg.lucide-arrow-down")).not.toBeNull();
+    expect(symbolHeader.querySelector("svg")).toBeNull();
+
+    fireEvent.click(screen.getByRole("button", { name: /Sort by Est\. Yield/i }));
+    expect(yieldHeader).toHaveAttribute("aria-sort", "ascending");
+    expect(yieldHeader.querySelector("svg.lucide-arrow-up")).not.toBeNull();
+    expect(yieldHeader.querySelector("svg.lucide-arrow-down")).toBeNull();
+
+    fireEvent.click(screen.getByRole("button", { name: /Sort by Symbol/i }));
+    expect(symbolHeader.querySelector("svg.lucide-arrow-up")).not.toBeNull();
+    expect(yieldHeader.querySelector("svg")).toBeNull();
+  });
+
+  it("colors only the status icon with semantic tokens, not the label", () => {
+    render(<RadarTable opportunities={[opportunities[1]]} />);
+    const label = within(screen.getByRole("table")).getByText("In Window");
+    expect(label.className).not.toMatch(/text-(success|warning|danger|green|yellow|red)/);
+    expect(label.querySelector("svg")?.getAttribute("class")).toMatch(/text-success/);
+  });
 });

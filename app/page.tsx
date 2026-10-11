@@ -25,6 +25,9 @@ const DEFAULT_FILTERS: FilterOptions = {
   sortDirection: "desc",
 };
 
+const RISK_DISCLAIMER =
+  "Projected dates and yields are estimates from historical dividend patterns, not financial advice. Past dividends do not guarantee future payments. Verify with official IDX announcements before trading.";
+
 export default function Home() {
   const [parseResult, setParseResult] = useState<ParseResult | null>(null);
   const [filters, setFilters] = useState<FilterOptions>(DEFAULT_FILTERS);
@@ -55,24 +58,44 @@ export default function Home() {
     setFilters(DEFAULT_FILTERS);
   };
 
+  const dropzone = (
+    <Dropzone
+      onDataLoaded={setParseResult}
+      currentData={parseResult}
+      onClear={handleClear}
+    />
+  );
+
   return (
-    <div className="space-y-6">
-      <Dropzone
-        onDataLoaded={setParseResult}
-        currentData={parseResult}
-        onClear={handleClear}
-      />
-      {parseResult && (
+    <div className="space-y-10">
+      <div className="space-y-2">
+        <h1 className="text-xl font-semibold uppercase tracking-widest">
+          Dividend Capture Radar
+        </h1>
+        {parseResult && (
+          <p className="text-xs text-muted-foreground">{RISK_DISCLAIMER}</p>
+        )}
+      </div>
+      {parseResult ? (
         <>
-          <StatsOverview
-            stats={stats}
-            nextUpcomingCumDate={nextUpcomingCumDate}
-          />
-          <FilterBar filters={filters} onFilterChange={setFilters} />
-          <WatchlistExport opportunities={filtered} />
-          <RadarTable opportunities={filtered} />
-          <SeasonalityChart opportunities={filtered} />
+          <div className="space-y-4">
+            <StatsOverview
+              stats={stats}
+              nextUpcomingCumDate={nextUpcomingCumDate}
+            />
+          </div>
+          <div className="space-y-4">
+            <FilterBar filters={filters} onFilterChange={setFilters} />
+            <WatchlistExport opportunities={filtered} />
+            <RadarTable opportunities={filtered} />
+          </div>
+          <div className="space-y-4">
+            <SeasonalityChart opportunities={filtered} />
+          </div>
+          {dropzone}
         </>
+      ) : (
+        dropzone
       )}
     </div>
   );

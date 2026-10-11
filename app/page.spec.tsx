@@ -52,4 +52,30 @@ describe("Home page", () => {
     expect(screen.queryByRole("table")).not.toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Load Demo Data/i })).toBeInTheDocument();
   });
+
+  it("renders one h1 in both empty and loaded states", () => {
+    render(<Home />);
+    expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
+    expect(screen.getByRole("heading", { level: 1, name: "Dividend Capture Radar" })).toBeInTheDocument();
+
+    loadDemo();
+    expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
+  });
+
+  it("shows the risk disclaimer only when data is loaded", () => {
+    render(<Home />);
+    expect(screen.queryByText(/not financial advice/i)).not.toBeInTheDocument();
+
+    loadDemo();
+    expect(screen.getByText(/not financial advice/i)).toBeVisible();
+  });
+
+  it("places the loaded-state banner after the seasonality chart", () => {
+    render(<Home />);
+    loadDemo();
+
+    const chart = screen.getByRole("heading", { name: /Dividend seasonality/i });
+    const banner = screen.getByText(/Data Loaded Successfully/i);
+    expect(chart.compareDocumentPosition(banner) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  });
 });

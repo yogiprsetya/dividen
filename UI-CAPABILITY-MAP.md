@@ -74,6 +74,6 @@ No new runtime or dev dependencies. Charts stay CSS/SVG.
 Written just-in-time, in dependency order, each gated on review before implementation:
 
 - [`SPEC-design-tokens.md`](SPEC-design-tokens.md)
-- `SPEC-app-shell.md` — not yet written
-- `SPEC-data-presentation.md` — not yet written
+- [`SPEC-app-shell.md`](SPEC-app-shell.md)
+- [`SPEC-data-presentation.md`](SPEC-data-presentation.md)
 - `SPEC-a11y-semantics.md` — not yet written

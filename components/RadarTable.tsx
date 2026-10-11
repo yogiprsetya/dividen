@@ -1,5 +1,5 @@
 import React, { useMemo, useState } from "react";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ArrowDown, ArrowUp, ChevronDown, ChevronUp } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Icons } from "@/components/icons";
@@ -16,9 +16,9 @@ type SortBy = Extract<FilterOptions["sortBy"], "yield" | "daysToCumDate" | "tick
 type SortDirection = FilterOptions["sortDirection"];
 
 const STATUS_DISPLAY: Record<WindowStatus, { label: string; icon: typeof Icons.logo; className: string }> = {
-  OPTIMAL: { label: "In Window", icon: Icons.status.optimal, className: "text-green-600" },
-  APPROACHING: { label: "Approaching", icon: Icons.status.approaching, className: "text-yellow-600" },
-  LATE: { label: "Late", icon: Icons.status.late, className: "text-red-600" },
+  OPTIMAL: { label: "In Window", icon: Icons.status.optimal, className: "text-success" },
+  APPROACHING: { label: "Approaching", icon: Icons.status.approaching, className: "text-warning" },
+  LATE: { label: "Late", icon: Icons.status.late, className: "text-danger" },
   OFF_CYCLE: { label: "Off Cycle", icon: Icons.status.offCycle, className: "text-muted-foreground" },
 };
 
@@ -33,8 +33,8 @@ const TYPE_LABEL = { INTERIM: "Interim", FINAL: "Final", UNKNOWN: "Unknown" } as
 function StatusBadge({ status }: { status: WindowStatus }) {
   const { label, icon: Icon, className } = STATUS_DISPLAY[status];
   return (
-    <Badge className={className}>
-      <Icon aria-hidden />
+    <Badge>
+      <Icon aria-hidden className={className} />
       {label}
     </Badge>
   );
@@ -110,15 +110,19 @@ export function RadarTable({ opportunities }: RadarTableProps) {
   const ariaSort = (column: SortBy) =>
     sortBy === column ? (sortDirection === "asc" ? "ascending" : "descending") : "none";
 
-  const sortHeader = (column: SortBy, label: string) => (
-    <Button variant="ghost" size="xs" aria-label={`Sort by ${label}`} onClick={() => handleSort(column)}>
-      {label}
-    </Button>
-  );
+  const sortHeader = (column: SortBy, label: string) => {
+    const Caret = sortDirection === "asc" ? ArrowUp : ArrowDown;
+    return (
+      <Button variant="ghost" size="xs" aria-label={`Sort by ${label}`} onClick={() => handleSort(column)}>
+        {label}
+        {sortBy === column && <Caret aria-hidden />}
+      </Button>
+    );
+  };
 
   if (opportunities.length === 0) {
     return (
-      <div className="rounded-lg border p-8 text-center text-sm text-muted-foreground">
+      <div className="ring-1 ring-foreground/5 p-8 text-center text-sm text-muted-foreground">
         No opportunities match the current filters.
       </div>
     );
@@ -126,7 +130,7 @@ export function RadarTable({ opportunities }: RadarTableProps) {
 
   return (
     <>
-      <div className="hidden md:block rounded-lg border overflow-x-auto">
+      <div className="hidden md:block ring-1 ring-foreground/5 overflow-x-auto">
         <table className="w-full text-sm">
           <thead className="bg-muted/50 text-left">
             <tr>
@@ -191,7 +195,7 @@ export function RadarTable({ opportunities }: RadarTableProps) {
         {sorted.map((opp) => {
           const isExpanded = expanded.has(opp.ticker);
           return (
-            <article key={opp.ticker} className="rounded-lg border bg-card p-4 space-y-2">
+            <article key={opp.ticker} className="ring-1 ring-foreground/5 bg-card p-4 space-y-2">
               <div className="flex items-start justify-between gap-2">
                 <div>
                   <div className="font-medium">{opp.ticker}</div>
