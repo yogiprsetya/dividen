@@ -76,7 +76,14 @@ export default function Home() {
           <p className="text-xs text-muted-foreground">{RISK_DISCLAIMER}</p>
         )}
       </div>
-      {parseResult ? (
+      {parseResult && opportunities.length === 0 ? (
+        <>
+          <p className="text-sm text-muted-foreground">
+            No dividend data to show. The loaded file has no usable dividend rows.
+          </p>
+          {dropzone}
+        </>
+      ) : parseResult ? (
         <>
           <div className="space-y-4">
             <StatsOverview

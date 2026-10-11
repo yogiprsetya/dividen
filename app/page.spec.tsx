@@ -78,4 +78,17 @@ describe("Home page", () => {
     const banner = screen.getByText(/Data Loaded Successfully/i);
     expect(chart.compareDocumentPosition(banner) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
   });
+
+  it("shows one empty-state message when the loaded CSV has no usable rows", async () => {
+    render(<Home />);
+
+    const file = new File(["foo,bar\n1,2"], "empty.csv", { type: "text/csv" });
+    fireEvent.change(screen.getByLabelText(/Upload CSV file/i), { target: { files: [file] } });
+
+    await screen.findByText(/No dividend data to show/i);
+    expect(screen.queryByText(/No data loaded$/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/No dividend events/i)).not.toBeInTheDocument();
+    expect(screen.queryByText(/No opportunities match/i)).not.toBeInTheDocument();
+    expect(screen.queryByRole("table")).not.toBeInTheDocument();
+  });
 });
