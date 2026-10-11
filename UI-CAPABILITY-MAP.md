@@ -76,4 +76,4 @@ Written just-in-time, in dependency order, each gated on review before implement
 - [`SPEC-design-tokens.md`](SPEC-design-tokens.md)
 - [`SPEC-app-shell.md`](SPEC-app-shell.md)
 - [`SPEC-data-presentation.md`](SPEC-data-presentation.md)
-- `SPEC-a11y-semantics.md` — not yet written
+- [`SPEC-a11y-semantics.md`](SPEC-a11y-semantics.md)
