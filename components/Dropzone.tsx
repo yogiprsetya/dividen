@@ -84,9 +84,9 @@ export function Dropzone({
   if (currentData) {
     return (
       <div className="space-y-4">
-        <div className="flex items-center justify-between p-4 border rounded-lg bg-muted/50">
+        <div className="flex items-center justify-between p-4 ring-1 ring-foreground/5 bg-muted/50">
           <div className="flex items-center space-x-3">
-            <CheckCircle2 className="w-6 h-6 text-green-500" />
+            <CheckCircle2 className="w-6 h-6 text-success" />
             <div>
               <p className="font-medium">Data Loaded Successfully</p>
               <p className="text-sm text-muted-foreground">
@@ -127,7 +127,7 @@ export function Dropzone({
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
         className={`
-          relative flex flex-col items-center justify-center p-12 border-2 border-dashed rounded-xl transition-colors
+          relative flex flex-col items-center justify-center p-12 border-2 border-dashed transition-colors
           ${isDragging ? "border-primary bg-primary/5" : "border-muted-foreground/25 hover:border-primary/50 hover:bg-muted/50"}
         `}
       >
@@ -140,7 +140,7 @@ export function Dropzone({
         />
 
         <div className="flex flex-col items-center text-center space-y-4 pointer-events-none">
-          <div className="p-4 bg-muted rounded-full">
+          <div className="p-4 bg-muted">
             <UploadCloud className="w-8 h-8 text-muted-foreground" />
           </div>
           <div>

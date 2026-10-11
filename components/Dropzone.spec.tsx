@@ -1,7 +1,7 @@
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { describe, it, expect, vi } from "vitest";
-import { Dropzone } from "../../components/Dropzone";
-import { loadSampleDividendParseResult } from "../../lib/parser/sample-data";
+import { Dropzone } from "./Dropzone";
+import { loadSampleDividendParseResult } from "../lib/parser/sample-data";
 
 describe("Dropzone", () => {
   it("renders the dropzone area", () => {
@@ -80,5 +80,21 @@ describe("Dropzone", () => {
     expect(
       screen.getByText(/Skipped row 5 due to missing price/i),
     ).toBeInTheDocument();
+  });
+
+  it("uses the success token for the loaded icon", () => {
+    const { container } = render(
+      <Dropzone
+        onDataLoaded={() => {}}
+        currentData={loadSampleDividendParseResult()}
+      />,
+    );
+    expect(container.querySelector("svg.text-success")).toBeInTheDocument();
+    expect(container.querySelector(".text-green-500")).not.toBeInTheDocument();
+  });
+
+  it("renders the drop area without radius", () => {
+    const { container } = render(<Dropzone onDataLoaded={() => {}} />);
+    expect(container.querySelector("[class*='rounded-xl'], [class*='rounded-full'], [class*='rounded-lg']")).toBeNull();
   });
 });
