@@ -62,6 +62,20 @@ describe("Home page", () => {
     expect(screen.getAllByRole("heading", { level: 1 })).toHaveLength(1);
   });
 
+  it("orders headings h1 > h2 Summary > h2 seasonality with no skipped levels", () => {
+    render(<Home />);
+    loadDemo();
+
+    const headings = screen
+      .getAllByRole("heading")
+      .map((h) => [Number(h.tagName[1]), h.textContent]);
+    expect(headings).toEqual([
+      [1, "Dividend Capture Radar"],
+      [2, "Summary"],
+      [2, "Dividend seasonality"],
+    ]);
+  });
+
   it("shows the risk disclaimer only when data is loaded", () => {
     render(<Home />);
     expect(screen.queryByText(/not financial advice/i)).not.toBeInTheDocument();

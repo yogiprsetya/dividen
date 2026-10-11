@@ -29,6 +29,11 @@ describe("StatsOverview", () => {
     expect(screen.getByText("2023-10-15")).toBeInTheDocument();
   });
 
+  it("renders an h2 'Summary' heading when populated", () => {
+    render(<StatsOverview stats={mockStats} nextUpcomingCumDate={null} />);
+    expect(screen.getByRole("heading", { level: 2, name: "Summary" })).toBeInTheDocument();
+  });
+
   it("handles missing nextUpcomingCumDate", () => {
     render(<StatsOverview stats={mockStats} nextUpcomingCumDate={null} />);
     expect(screen.getByText(/Next Upcoming Cum Date/i)).toBeInTheDocument();
@@ -47,5 +52,6 @@ describe("StatsOverview", () => {
     expect(screen.getByText("No data loaded")).toBeInTheDocument();
     expect(screen.queryByText(/Active Buy Windows/i)).not.toBeInTheDocument();
     expect(screen.queryByText("N/A")).not.toBeInTheDocument();
+    expect(screen.queryByRole("heading")).not.toBeInTheDocument();
   });
 });
