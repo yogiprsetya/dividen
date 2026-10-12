@@ -11,6 +11,7 @@ import { Alert, AlertDescription, AlertTitle } from "./ui/alert";
 import { parseStockbitCsv } from "../lib/parser";
 import { loadSampleDividendParseResult } from "../lib/parser/sample-data";
 import type { ParseResult } from "../lib/parser/types";
+import { cn } from "../lib/utils";
 
 interface DropzoneProps {
   onDataLoaded: (result: ParseResult) => void;
@@ -126,10 +127,12 @@ export function Dropzone({
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
         onDrop={handleDrop}
-        className={`
-          relative flex flex-col items-center justify-center p-12 border-2 border-dashed transition-colors
-          ${isDragging ? "border-primary bg-primary/5" : "border-muted-foreground/25 hover:border-primary/50 hover:bg-muted/50"}
-        `}
+        className={cn(
+          "relative flex flex-col items-center justify-center p-12 border-2 border-dashed transition-colors",
+          isDragging
+            ? "border-primary bg-primary/5"
+            : "border-muted-foreground/25 hover:border-primary/50 hover:bg-muted/50"
+        )}
       >
         <input
           type="file"

@@ -1,6 +1,7 @@
 import React, { useMemo } from "react";
 import { INDONESIAN_MONTH_NAMES, addDays } from "@/lib/utils/date";
 import type { RadarOpportunity } from "@/lib/engine/types";
+import { cn } from "@/lib/utils";
 
 interface SeasonalityChartProps {
   opportunities: RadarOpportunity[];
@@ -71,11 +72,10 @@ export function SeasonalityChart({ opportunities }: SeasonalityChartProps) {
               className="border p-2 text-xs space-y-1"
             >
               <div
-                className={
-                  i === currentMonth
-                    ? "font-medium inline-block border-b-2 border-foreground"
-                    : "font-medium"
-                }
+                className={cn(
+                  "font-medium",
+                  i === currentMonth && "inline-block border-b-2 border-foreground"
+                )}
               >
                 {name}
               </div>
