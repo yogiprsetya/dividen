@@ -55,6 +55,12 @@ describe("RadarTable", () => {
     }
   });
 
+  it("styles every column header alike, sortable or not", () => {
+    render(<RadarTable opportunities={opportunities} />);
+    const thead = screen.getByRole("table").querySelector("thead");
+    expect(thead).toHaveClass("text-xs", "uppercase", "tracking-widest");
+  });
+
   it("sorts by yield descending by default", () => {
     render(<RadarTable opportunities={opportunities} />);
     expect(tickerOrder()).toEqual(["PTBA", "ASII", "BBCA"]);

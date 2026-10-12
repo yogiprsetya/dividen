@@ -79,7 +79,8 @@ export default function Home() {
       {parseResult && opportunities.length === 0 ? (
         <>
           <p className="text-sm text-muted-foreground">
-            No dividend data to show. The loaded file has no usable dividend rows.
+            No dividend data to show. The loaded file has no usable dividend
+            rows.
           </p>
           {dropzone}
         </>

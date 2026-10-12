@@ -26,7 +26,7 @@ describe("StatsOverview", () => {
     expect(screen.getByText("5.50%")).toBeInTheDocument();
 
     expect(screen.getByText(/Next Upcoming Cum Date/i)).toBeInTheDocument();
-    expect(screen.getByText("2023-10-15")).toBeInTheDocument();
+    expect(screen.getByText("15 Oktober 2023")).toBeInTheDocument();
   });
 
   it("renders an h2 'Summary' heading when populated", () => {

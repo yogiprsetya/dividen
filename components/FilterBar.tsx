@@ -12,25 +12,16 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import type { FilterOptions, WindowStatus } from "@/lib/engine/types";
+import { INDONESIAN_MONTH_NAMES } from "@/lib/utils/date";
 
 interface FilterBarProps {
   filters: FilterOptions;
   onFilterChange: (filters: FilterOptions) => void;
 }
 
-const MONTHS = [
-  { value: "1", label: "January" },
-  { value: "2", label: "February" },
-  { value: "3", label: "March" },
-  { value: "4", label: "April" },
-  { value: "5", label: "May" },
-  { value: "6", label: "June" },
-  { value: "7", label: "July" },
-  { value: "8", label: "August" },
-  { value: "9", label: "September" },
-  { value: "10", label: "October" },
-  { value: "11", label: "November" },
-  { value: "12", label: "December" },
+const MONTH_ITEMS = [
+  { value: "ALL", label: "All Months" },
+  ...INDONESIAN_MONTH_NAMES.map((label, i) => ({ value: String(i + 1), label })),
 ];
 
 export function FilterBar({ filters, onFilterChange }: FilterBarProps) {
@@ -81,7 +72,11 @@ export function FilterBar({ filters, onFilterChange }: FilterBarProps) {
     <div className="space-y-4 p-4 bg-card ring-1 ring-foreground/5">
       <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
         <div className="flex-1 w-full md:max-w-sm">
+          <label htmlFor="filter-search" className="sr-only">
+            Search ticker or company
+          </label>
           <Input
+            id="filter-search"
             placeholder="Search ticker or company..."
             value={searchValue}
             onChange={handleSearchChange}
@@ -96,12 +91,15 @@ export function FilterBar({ filters, onFilterChange }: FilterBarProps) {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="space-y-3">
           <div className="flex justify-between">
-            <label className="text-sm font-medium">Minimum Yield</label>
+            <span id="filter-min-yield-label" className="text-sm font-medium">
+              Minimum Yield
+            </span>
             <span className="text-sm text-muted-foreground">
               {filters.minYield}%
             </span>
           </div>
           <Slider
+            aria-labelledby="filter-min-yield-label"
             value={[filters.minYield]}
             onValueChange={handleMinYieldChange}
             max={25}
@@ -110,17 +108,19 @@ export function FilterBar({ filters, onFilterChange }: FilterBarProps) {
         </div>
 
         <div className="space-y-3">
-          <label className="text-sm font-medium">Accumulation Month</label>
+          <label htmlFor="filter-month" className="text-sm font-medium">
+            Accumulation Month
+          </label>
           <Select
+            items={MONTH_ITEMS}
             value={filters.targetMonth.toString()}
             onValueChange={handleMonthChange}
           >
-            <SelectTrigger>
+            <SelectTrigger id="filter-month">
               <SelectValue placeholder="Select month" />
             </SelectTrigger>
             <SelectContent>
-              <SelectItem value="ALL">All Months</SelectItem>
-              {MONTHS.map((month) => (
+              {MONTH_ITEMS.map((month) => (
                 <SelectItem key={month.value} value={month.value}>
                   {month.label}
                 </SelectItem>
@@ -130,9 +130,14 @@ export function FilterBar({ filters, onFilterChange }: FilterBarProps) {
         </div>
 
         <div className="space-y-3">
-          <label className="text-sm font-medium">Window Status</label>
+          <span id="filter-status-label" className="text-sm font-medium block">
+            Window Status
+          </span>
           <Tabs value={filters.status} onValueChange={handleStatusChange}>
-            <TabsList className="w-full grid grid-cols-3">
+            <TabsList
+              aria-labelledby="filter-status-label"
+              className="w-full grid grid-cols-3"
+            >
               <TabsTrigger value="ALL">All</TabsTrigger>
               <TabsTrigger value="OPTIMAL">In Window</TabsTrigger>
               <TabsTrigger value="APPROACHING">Approaching</TabsTrigger>

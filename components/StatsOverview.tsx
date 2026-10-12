@@ -1,6 +1,7 @@
 import React from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { SummaryStats } from "@/lib/engine/types";
+import { formatDateIndonesian } from "@/lib/utils/date";
 
 interface StatsOverviewProps {
   stats: SummaryStats;
@@ -62,7 +63,9 @@ export function StatsOverview({
           </CardHeader>
           <CardContent>
             <div className="text-2xl font-bold">
-              {nextUpcomingCumDate || "N/A"}
+              {nextUpcomingCumDate
+                ? formatDateIndonesian(nextUpcomingCumDate)
+                : "N/A"}
             </div>
           </CardContent>
         </Card>

@@ -113,7 +113,13 @@ export function RadarTable({ opportunities }: RadarTableProps) {
   const sortHeader = (column: SortBy, label: string) => {
     const Caret = sortDirection === "asc" ? ArrowUp : ArrowDown;
     return (
-      <Button variant="ghost" size="xs" aria-label={`Sort by ${label}`} onClick={() => handleSort(column)}>
+      <Button
+        variant="ghost"
+        size="xs"
+        className="-mx-3"
+        aria-label={`Sort by ${label}`}
+        onClick={() => handleSort(column)}
+      >
         {label}
         {sortBy === column && <Caret aria-hidden />}
       </Button>
@@ -132,23 +138,23 @@ export function RadarTable({ opportunities }: RadarTableProps) {
     <>
       <div className="hidden md:block ring-1 ring-foreground/5 overflow-x-auto">
         <table className="w-full text-sm">
-          <thead className="bg-muted/50 text-left">
+          <thead className="bg-muted/50 text-left text-xs font-semibold uppercase tracking-widest">
             <tr>
-              <th scope="col" aria-sort={ariaSort("ticker")} className="p-2">
+              <th scope="col" aria-sort={ariaSort("ticker")} className="px-3 py-2">
                 {sortHeader("ticker", "Symbol")}
               </th>
-              <th scope="col" className="p-2">Status</th>
-              <th scope="col" className="p-2">Price</th>
-              <th scope="col" className="p-2">Est. Cum Date</th>
-              <th scope="col" aria-sort={ariaSort("daysToCumDate")} className="p-2">
+              <th scope="col" className="px-3 py-2">Status</th>
+              <th scope="col" className="px-3 py-2">Price</th>
+              <th scope="col" className="px-3 py-2">Est. Cum Date</th>
+              <th scope="col" aria-sort={ariaSort("daysToCumDate")} className="px-3 py-2">
                 {sortHeader("daysToCumDate", "Days to Cum Date")}
               </th>
-              <th scope="col" className="p-2">Est. DPS</th>
-              <th scope="col" aria-sort={ariaSort("yield")} className="p-2">
+              <th scope="col" className="px-3 py-2">Est. DPS</th>
+              <th scope="col" aria-sort={ariaSort("yield")} className="px-3 py-2">
                 {sortHeader("yield", "Est. Yield")}
               </th>
-              <th scope="col" className="p-2">Consistency</th>
-              <th scope="col" className="p-2">Historical Payouts</th>
+              <th scope="col" className="px-3 py-2">Consistency</th>
+              <th scope="col" className="px-3 py-2">Historical Payouts</th>
             </tr>
           </thead>
           <tbody>

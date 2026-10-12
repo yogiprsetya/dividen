@@ -27,6 +27,32 @@ describe("FilterBar", () => {
     ).toBeInTheDocument();
   });
 
+  it("gives every filter control an accessible name", () => {
+    render(<FilterBar filters={defaultFilters} onFilterChange={vi.fn()} />);
+
+    expect(screen.getByLabelText("Search ticker or company")).toBeInTheDocument();
+    expect(
+      screen.getByRole("group", { name: "Minimum Yield" }),
+    ).toBeInTheDocument();
+    expect(screen.getByLabelText("Accumulation Month")).toBeInTheDocument();
+    expect(
+      screen.getByRole("tablist", { name: "Window Status" }),
+    ).toBeInTheDocument();
+  });
+
+  it("shows the selected month's name, not its number, in the month trigger", () => {
+    render(
+      <FilterBar
+        filters={{ ...defaultFilters, targetMonth: 3 }}
+        onFilterChange={vi.fn()}
+      />,
+    );
+
+    const trigger = screen.getByLabelText("Accumulation Month");
+    expect(trigger).toHaveTextContent("Maret");
+    expect(trigger).not.toHaveTextContent(/^3$/);
+  });
+
   it("calls onFilterChange when search query changes after debounce", async () => {
     const onFilterChange = vi.fn();
     render(
