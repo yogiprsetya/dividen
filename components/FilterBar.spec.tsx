@@ -25,7 +25,7 @@ describe("FilterBar", () => {
     expect(screen.getByText(/Accumulation Month/i)).toBeInTheDocument();
     expect(screen.getByText(/Window Status/i)).toBeInTheDocument();
     expect(
-      screen.getByPlaceholderText(/Search ticker or company/i),
+      screen.getByPlaceholderText(/Search ticker/i),
     ).toBeInTheDocument();
     expect(
       screen.getByRole("button", { name: /Reset Filters/i }),
@@ -35,7 +35,7 @@ describe("FilterBar", () => {
   it("gives every filter control an accessible name", () => {
     render(<FilterBar filters={defaultFilters} onFilterChange={vi.fn()} />);
 
-    expect(screen.getByLabelText("Search ticker or company")).toBeInTheDocument();
+    expect(screen.getByLabelText("Search ticker")).toBeInTheDocument();
     expect(
       screen.getByRole("group", { name: "Minimum Yield" }),
     ).toBeInTheDocument();
@@ -65,7 +65,7 @@ describe("FilterBar", () => {
     );
 
     const searchInput = screen.getByPlaceholderText(
-      /Search ticker or company/i,
+      /Search ticker/i,
     );
     fireEvent.change(searchInput, { target: { value: "BBCA" } });
 
@@ -105,7 +105,7 @@ describe("FilterBar", () => {
       return <FilterBar filters={filters} onFilterChange={setFilters} />;
     }
     render(<Harness />);
-    const search = screen.getByLabelText(/Search ticker or company/i);
+    const search = screen.getByLabelText(/Search ticker/i);
 
     fireEvent.change(search, { target: { value: "BB" } });
     act(() => vi.advanceTimersByTime(300));

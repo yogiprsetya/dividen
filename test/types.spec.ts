@@ -28,7 +28,6 @@ describe('Shared Type Contracts & Harness', () => {
 
     const normalizedRow: StockbitDividendRow = {
       ticker: 'BBCA',
-      companyName: 'Bank Central Asia Tbk.',
       cumDate: '2024-03-15',
       exDate: '2024-03-16',
       paymentDate: '2024-04-04',
@@ -83,7 +82,6 @@ describe('Shared Type Contracts & Harness', () => {
 
     const opportunity: RadarOpportunity = {
       ticker: 'BBCA',
-      companyName: 'Bank Central Asia Tbk.',
       currentPrice: 9800,
       estimatedNextCumDate: '2025-03-15',
       estimatedYield: 3.2,

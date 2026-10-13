@@ -56,11 +56,10 @@ export function generateRadarOpportunities(
   rawRows: StockbitDividendRow[],
   currentDate: Date = new Date(),
 ): RadarOpportunity[] {
-  // Map ticker to latest available company info & latest stock price
+  // Map ticker to latest stock price & dividend history
   const tickerMap = new Map<
     string,
     {
-      companyName: string;
       latestPrice: number;
       history: HistoricalDividendRecord[];
     }
@@ -83,7 +82,6 @@ export function generateRadarOpportunities(
 
     if (!existing) {
       tickerMap.set(row.ticker, {
-        companyName: row.companyName || row.ticker,
         latestPrice: row.price || 0,
         history: [histRecord],
       });
@@ -91,9 +89,6 @@ export function generateRadarOpportunities(
       existing.history.push(histRecord);
       if (!existing.latestPrice && row.price) {
         existing.latestPrice = row.price;
-      }
-      if (!existing.companyName && row.companyName) {
-        existing.companyName = row.companyName;
       }
     }
   }
@@ -104,7 +99,6 @@ export function generateRadarOpportunities(
     if (!cycle.estimatedNextCumDate) continue;
 
     const info = tickerMap.get(cycle.ticker);
-    const companyName = info?.companyName || cycle.ticker;
     const history = info?.history || cycle.historicalDividends;
 
     const daysToCumDate = calculateDaysDifference(
@@ -139,7 +133,6 @@ export function generateRadarOpportunities(
 
     opportunities.push({
       ticker: cycle.ticker,
-      companyName,
       currentPrice: info?.latestPrice || 0,
       estimatedNextCumDate: cycle.estimatedNextCumDate,
       estimatedYield,
@@ -183,12 +176,11 @@ export function filterRadarOpportunities(
       }
     }
 
-    // Search Query Filter (ticker or company name)
+    // Search Query Filter (ticker)
     if (filters.searchQuery.trim()) {
       const q = filters.searchQuery.trim().toLowerCase();
       const matchesTicker = opp.ticker.toLowerCase().includes(q);
-      const matchesCompany = opp.companyName.toLowerCase().includes(q);
-      if (!matchesTicker && !matchesCompany) {
+      if (!matchesTicker) {
         return false;
       }
     }

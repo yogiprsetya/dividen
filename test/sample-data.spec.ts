@@ -80,8 +80,6 @@ describe("Built-in IDX Sample Dataset & Loader", () => {
         expect(row.price).toBeGreaterThan(0);
         expect(row.year).toBeGreaterThanOrEqual(2020);
         expect(["INTERIM", "FINAL", "UNKNOWN"]).toContain(row.dividendType);
-        expect(row.companyName).toBeDefined();
-        expect(row.companyName!.length).toBeGreaterThan(0);
       });
     });
   });

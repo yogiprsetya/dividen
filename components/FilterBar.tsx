@@ -78,12 +78,12 @@ export function FilterBar({ filters, onFilterChange }: FilterBarProps) {
       <div className="flex gap-4 items-center justify-between">
         <div className="flex-1 w-full md:max-w-sm">
           <Label htmlFor="filter-search" className="sr-only">
-            Search ticker or company
+            Search ticker
           </Label>
 
           <Input
             id="filter-search"
-            placeholder="Search ticker or company..."
+            placeholder="Search ticker..."
             value={searchValue}
             onChange={handleSearchChange}
             className="w-full"

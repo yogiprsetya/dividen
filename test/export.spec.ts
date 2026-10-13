@@ -177,7 +177,6 @@ describe("Export Utilities (lib/utils/export.ts)", () => {
   const mockOpportunities: RadarOpportunity[] = [
     {
       ticker: "BBCA",
-      companyName: "Bank Central Asia Tbk",
       currentPrice: 9800,
       estimatedNextCumDate: "2025-03-20",
       estimatedYield: 4.85,
@@ -191,7 +190,6 @@ describe("Export Utilities (lib/utils/export.ts)", () => {
     },
     {
       ticker: "PTBA",
-      companyName: "Bukit Asam Tbk, PT",
       currentPrice: 2650,
       estimatedNextCumDate: "2025-06-15",
       estimatedYield: 14.2,
@@ -212,18 +210,11 @@ describe("Export Utilities (lib/utils/export.ts)", () => {
 
       expect(lines.length).toBe(3);
       expect(lines[0]).toBe(
-        "Ticker,Company Name,Current Price (IDR),Estimated Next Cum Date,Projected Yield (%),Days to Cum Date,Window Status,Consistency Score (%)",
+        "Ticker,Current Price (IDR),Estimated Next Cum Date,Projected Yield (%),Days to Cum Date,Window Status,Consistency Score (%)",
       );
 
       // Verify row 1 (BBCA)
-      expect(lines[1]).toBe(
-        "BBCA,Bank Central Asia Tbk,9800,2025-03-20,4.85,70,OPTIMAL,95",
-      );
-
-      // Verify row 2 (PTBA with comma in company name escaped)
-      expect(lines[2]).toBe(
-        'PTBA,"Bukit Asam Tbk, PT",2650,2025-06-15,14.20,110,APPROACHING,88',
-      );
+      expect(lines[1]).toBe("BBCA,9800,2025-03-20,4.85,70,OPTIMAL,95");
     });
 
     it("returns only headers for empty opportunity array", () => {

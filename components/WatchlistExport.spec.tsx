@@ -6,7 +6,6 @@ import type { RadarOpportunity } from "@/lib/engine/types";
 function makeOpportunity(ticker: string): RadarOpportunity {
   return {
     ticker,
-    companyName: `${ticker} Tbk`,
     currentPrice: 1000,
     estimatedNextCumDate: "2026-12-01",
     estimatedYield: 5,

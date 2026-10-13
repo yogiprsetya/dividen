@@ -19,7 +19,6 @@ export * from "./sample-data";
 
 interface ColumnIndexes {
   ticker?: number;
-  companyName?: number;
   cumDate?: number;
   exDate?: number;
   paymentDate?: number;
@@ -46,17 +45,6 @@ function mapColumns(headers: string[]): ColumnIndexes {
       )
     ) {
       if (mapping.ticker === undefined) mapping.ticker = idx;
-    } else if (
-      [
-        "companyname",
-        "name",
-        "emitenname",
-        "namaperusahaan",
-        "company",
-        "perusahaan",
-      ].includes(key)
-    ) {
-      if (mapping.companyName === undefined) mapping.companyName = idx;
     } else if (
       ["cumdate", "tanggalcum", "cum", "cumdividenddate"].includes(key)
     ) {
@@ -195,10 +183,6 @@ export function parseStockbitCsv(
     const rowNumber = idx + 2; // 1-based index including header
     const rawTicker =
       colMap.ticker !== undefined ? rowCells[colMap.ticker] : undefined;
-    const rawCompanyName =
-      colMap.companyName !== undefined
-        ? rowCells[colMap.companyName]
-        : undefined;
     const rawCumDate =
       colMap.cumDate !== undefined ? rowCells[colMap.cumDate] : undefined;
     const rawExDate =
@@ -280,15 +264,10 @@ export function parseStockbitCsv(
 
     const dividendType = detectDividendType(rawType);
     const paymentDate = parseDateToIso(rawPaymentDate) || undefined;
-    const companyName =
-      rawCompanyName && rawCompanyName.trim().length > 0
-        ? rawCompanyName.trim()
-        : ticker;
     const year = parseInt(cumDate.slice(0, 4), 10);
 
     rows.push({
       ticker,
-      companyName,
       cumDate,
       exDate: exDate || cumDate,
       paymentDate,

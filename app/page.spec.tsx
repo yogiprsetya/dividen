@@ -21,7 +21,7 @@ describe("Home page", () => {
     loadDemo();
 
     expect(screen.getByText(/Active Buy Windows/i)).toBeInTheDocument();
-    expect(screen.getByPlaceholderText(/Search ticker or company/i)).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(/Search ticker/i)).toBeInTheDocument();
     const table = screen.getByRole("table");
     for (const ticker of ["ASII", "BBCA", "BBRI", "ITMG", "PTBA", "UNTR"]) {
       expect(within(table).getByText(ticker)).toBeInTheDocument();
@@ -34,7 +34,7 @@ describe("Home page", () => {
     render(<Home />);
     loadDemo();
 
-    fireEvent.change(screen.getByPlaceholderText(/Search ticker or company/i), {
+    fireEvent.change(screen.getByPlaceholderText(/Search ticker/i), {
       target: { value: "BBCA" },
     });
 
@@ -49,7 +49,7 @@ describe("Home page", () => {
 
     expect(screen.getByText("Showing 6 of 6 stocks")).toBeInTheDocument();
 
-    fireEvent.change(screen.getByPlaceholderText(/Search ticker or company/i), {
+    fireEvent.change(screen.getByPlaceholderText(/Search ticker/i), {
       target: { value: "BBCA" },
     });
 

@@ -31,7 +31,6 @@ export interface DividendCycle {
  */
 export interface RadarOpportunity {
   ticker: string;
-  companyName: string;
   currentPrice: number;
   estimatedNextCumDate: string; // YYYY-MM-DD
   estimatedYield: number; // percentage, e.g. 5.2

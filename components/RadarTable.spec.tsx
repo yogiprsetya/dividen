@@ -7,7 +7,6 @@ import { formatCurrency } from "@/lib/utils/format";
 function makeOpportunity(overrides: Partial<RadarOpportunity>): RadarOpportunity {
   return {
     ticker: "AAAA",
-    companyName: "Company A",
     currentPrice: 1000,
     estimatedNextCumDate: "2026-12-01",
     estimatedYield: 5,

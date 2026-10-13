@@ -57,7 +57,6 @@ describe("Radar Screener Opportunities Generation", () => {
     expect(opportunities.length).toBeGreaterThan(0);
     for (const opp of opportunities) {
       expect(opp.ticker).toBeDefined();
-      expect(opp.companyName).toBeDefined();
       expect(opp.estimatedNextCumDate).toMatch(/^\d{4}-\d{2}-\d{2}$/);
       expect(opp.windowStatus).toMatch(
         /^(OPTIMAL|APPROACHING|LATE|OFF_CYCLE)$/,
@@ -74,7 +73,6 @@ describe("Screener Filtering Pipeline", () => {
   const mockOpportunities: RadarOpportunity[] = [
     {
       ticker: "BBCA",
-      companyName: "Bank Central Asia Tbk",
       currentPrice: 9500,
       estimatedNextCumDate: "2025-03-25",
       estimatedYield: 3.5,
@@ -88,7 +86,6 @@ describe("Screener Filtering Pipeline", () => {
     },
     {
       ticker: "ITMG",
-      companyName: "Indo Tambangraya Megah Tbk",
       currentPrice: 26000,
       estimatedNextCumDate: "2025-04-15",
       estimatedYield: 15.0,
@@ -102,7 +99,6 @@ describe("Screener Filtering Pipeline", () => {
     },
     {
       ticker: "ASII",
-      companyName: "Astra International Tbk",
       currentPrice: 5100,
       estimatedNextCumDate: "2025-05-10",
       estimatedYield: 7.2,
@@ -116,7 +112,6 @@ describe("Screener Filtering Pipeline", () => {
     },
     {
       ticker: "BBRI",
-      companyName: "Bank Rakyat Indonesia (Persero) Tbk",
       currentPrice: 4800,
       estimatedNextCumDate: "2025-01-20",
       estimatedYield: 6.0,
@@ -169,7 +164,7 @@ describe("Screener Filtering Pipeline", () => {
     expect(result.map((r) => r.ticker)).toEqual(["BBCA"]);
   });
 
-  it("filters by ticker and company name search query (case-insensitive)", () => {
+  it("filters by ticker search query (case-insensitive)", () => {
     const optionsTicker: FilterOptions = {
       minYield: 0,
       targetMonth: "ALL",
@@ -185,16 +180,16 @@ describe("Screener Filtering Pipeline", () => {
     expect(resultTicker.map((r) => r.ticker)).toContain("BBCA");
     expect(resultTicker.map((r) => r.ticker)).toContain("BBRI");
 
-    const optionsName: FilterOptions = {
+    const optionsUpper: FilterOptions = {
       minYield: 0,
       targetMonth: "ALL",
       status: "ALL",
-      searchQuery: "tambangraya",
+      searchQuery: "ITM",
       sortBy: "ticker",
       sortDirection: "asc",
     };
-    const resultName = filterRadarOpportunities(mockOpportunities, optionsName);
-    expect(resultName.map((r) => r.ticker)).toEqual(["ITMG"]);
+    const resultUpper = filterRadarOpportunities(mockOpportunities, optionsUpper);
+    expect(resultUpper.map((r) => r.ticker)).toEqual(["ITMG"]);
   });
 });
 
@@ -202,7 +197,6 @@ describe("Multi-Column Sorter", () => {
   const sampleList: RadarOpportunity[] = [
     {
       ticker: "UNTR",
-      companyName: "United Tractors Tbk",
       currentPrice: 24000,
       estimatedNextCumDate: "2025-04-20",
       estimatedYield: 8.5,
@@ -216,7 +210,6 @@ describe("Multi-Column Sorter", () => {
     },
     {
       ticker: "BBCA",
-      companyName: "Bank Central Asia Tbk",
       currentPrice: 9500,
       estimatedNextCumDate: "2025-03-25",
       estimatedYield: 3.5,
@@ -230,7 +223,6 @@ describe("Multi-Column Sorter", () => {
     },
     {
       ticker: "ITMG",
-      companyName: "Indo Tambangraya Megah Tbk",
       currentPrice: 26000,
       estimatedNextCumDate: "2025-04-15",
       estimatedYield: 15.0,
@@ -281,7 +273,6 @@ describe("Summary Stats Calculator", () => {
   const opportunities: RadarOpportunity[] = [
     {
       ticker: "BBCA",
-      companyName: "Bank Central Asia Tbk",
       currentPrice: 9500,
       estimatedNextCumDate: "2025-03-25",
       estimatedYield: 4.0,
@@ -295,7 +286,6 @@ describe("Summary Stats Calculator", () => {
     },
     {
       ticker: "ITMG",
-      companyName: "Indo Tambangraya Megah Tbk",
       currentPrice: 26000,
       estimatedNextCumDate: "2025-04-15",
       estimatedYield: 16.0,
@@ -309,7 +299,6 @@ describe("Summary Stats Calculator", () => {
     },
     {
       ticker: "ASII",
-      companyName: "Astra International Tbk",
       currentPrice: 5100,
       estimatedNextCumDate: "2025-05-10",
       estimatedYield: 8.0,

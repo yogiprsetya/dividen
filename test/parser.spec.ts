@@ -73,10 +73,10 @@ describe("Stockbit CSV Parser & Normalizer", () => {
 
   describe("parseStockbitCsv", () => {
     it("parses standard Stockbit dividend export CSV", () => {
-      const csv = `Symbol,Company Name,Cum Date,Ex Date,Payment Date,Cash Dividend,Yield (%),Price,Type
-BBCA,Bank Central Asia Tbk,15/03/2024,16/03/2024,04/04/2024,270,2.7%,10000,Final
-BBRI,Bank Rakyat Indonesia (Persero) Tbk,13/03/2024,14/03/2024,28/03/2024,319,5.3%,6000,Final
-ASII,Astra International Tbk,10/05/2024,13/05/2024,30/05/2024,421,8.1%,5200,Final`;
+      const csv = `Symbol,Cum Date,Ex Date,Payment Date,Cash Dividend,Yield (%),Price,Type
+BBCA,15/03/2024,16/03/2024,04/04/2024,270,2.7%,10000,Final
+BBRI,13/03/2024,14/03/2024,28/03/2024,319,5.3%,6000,Final
+ASII,10/05/2024,13/05/2024,30/05/2024,421,8.1%,5200,Final`;
 
       const result: ParseResult = parseStockbitCsv(csv);
 
@@ -89,7 +89,6 @@ ASII,Astra International Tbk,10/05/2024,13/05/2024,30/05/2024,421,8.1%,5200,Fina
 
       const bbca = result.rows[0];
       expect(bbca.ticker).toBe("BBCA");
-      expect(bbca.companyName).toBe("Bank Central Asia Tbk");
       expect(bbca.cumDate).toBe("2024-03-15");
       expect(bbca.exDate).toBe("2024-03-16");
       expect(bbca.paymentDate).toBe("2024-04-04");
@@ -119,18 +118,16 @@ UNVR,Unilever Indonesia Tbk,15/11/2023,16/11/2023,05/12/2023,63,2.4%,2600,Interi
       expect(result.rows[1].dividendType).toBe("INTERIM");
     });
 
-    it("correctly parses CSV with quotes, commas in company name, and CRLF line endings", () => {
+    it("correctly parses CSV with quotes, and CRLF line endings", () => {
       const csv =
-        "Symbol,Company Name,Cum Date,Ex Date,Payment Date,Cash Dividend,Yield (%),Price,Type\r\n" +
-        '"PTBA","Tambang Batubara Bukit Asam, Tbk",24/06/2024,25/06/2024,12/07/2024,"Rp 397,7",15.9%,"2,500",Final\r\n';
+        "Symbol,Cum Date,Ex Date,Payment Date,Cash Dividend,Yield (%),Price,Type\r\n" +
+        '"PTBA",24/06/2024,25/06/2024,12/07/2024,"Rp 397,7",15.9%,"2,500",Final\r\n';
 
       const result = parseStockbitCsv(csv);
 
       expect(result.rows).toHaveLength(1);
       expect(result.rows[0].ticker).toBe("PTBA");
-      expect(result.rows[0].companyName).toBe(
-        "Tambang Batubara Bukit Asam, Tbk",
-      );
+
       expect(result.rows[0].cumDate).toBe("2024-06-24");
       expect(result.rows[0].dividendPerShare).toBe(397.7);
       expect(result.rows[0].yieldPercent).toBe(15.9);

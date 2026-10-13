@@ -21,7 +21,6 @@ export function exportOpportunitiesToCSV(
 ): string {
   const headers = [
     "Ticker",
-    "Company Name",
     "Current Price (IDR)",
     "Estimated Next Cum Date",
     "Projected Yield (%)",
@@ -33,7 +32,6 @@ export function exportOpportunitiesToCSV(
   const rows = opportunities.map((opp) => {
     return [
       escapeCSVField(opp.ticker),
-      escapeCSVField(opp.companyName),
       escapeCSVField(opp.currentPrice),
       escapeCSVField(opp.estimatedNextCumDate),
       escapeCSVField(opp.estimatedYield.toFixed(2)),

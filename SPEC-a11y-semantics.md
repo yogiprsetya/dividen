@@ -39,7 +39,7 @@ per page).
 
 | Control | Label text (exact) | id | Association |
 |---|---|---|---|
-| Search `Input` | `Search ticker or company` | `filter-search` | `sr-only` `<label htmlFor="filter-search">`; placeholder stays as is |
+| Search `Input` | `Search ticker` | `filter-search` | `sr-only` `<label htmlFor="filter-search">`; placeholder stays as is |
 | Minimum Yield `Slider` | `Minimum Yield` | `filter-min-yield` | `<label htmlFor="filter-min-yield">`; id forwarded to the slider thumb's input via `Slider.Thumb` `inputId` path, or `aria-labelledby` on `Slider` if the id cannot reach the input |
 | Accumulation Month `SelectTrigger` | `Accumulation Month` | `filter-month` | `<label htmlFor="filter-month">`, id on `SelectTrigger` |
 | Window Status `Tabs` | `Window Status` | `filter-status-label` | see below |
@@ -61,7 +61,7 @@ Extend existing specs (Testing Library):
   populated; no heading in the empty state.
 - `app/page.spec.tsx`: after loading demo data, headings in DOM order are exactly
   h1 "Dividend Capture Radar", h2 "Summary", h2 "Seasonality" (levels never skip).
-- `FilterBar.spec.tsx`: `getByLabelText` succeeds for `Search ticker or company`,
+- `FilterBar.spec.tsx`: `getByLabelText` succeeds for `Search ticker`,
   `Minimum Yield`, `Accumulation Month`, and `getByRole("tablist", { name: "Window
   Status" })`.
 

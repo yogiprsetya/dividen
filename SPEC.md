@@ -64,7 +64,7 @@ Target Users: Indonesian stock market (IDX) retail investors who use Stockbit di
   - Minimum Yield threshold (slider / number input).
   - Accumulation month selector (Jan–Dec or "All").
   - Window status filter tabs (All, In Window, Approaching).
-  - Search input (Ticker symbol or company name).
+  - Search input (Ticker symbol).
 - **Radar Table:**
   - Columns: Ticker, Status Badge, Est. Cum Date, Days to Cum Date, Est. Yield %, Past Dividend History, Action.
   - Multi-column sort (Yield desc, Days to Cum asc, Ticker asc).

@@ -14,7 +14,6 @@ describe("Dividend Cycle Detection & Next Cum Date Estimator", () => {
       const records: StockbitDividendRow[] = [
         {
           ticker: "ASII",
-          companyName: "Astra International Tbk",
           cumDate: "2022-05-10",
           exDate: "2022-05-11",
           dividendPerShare: 194,
@@ -25,7 +24,6 @@ describe("Dividend Cycle Detection & Next Cum Date Estimator", () => {
         },
         {
           ticker: "ASII",
-          companyName: "Astra International Tbk",
           cumDate: "2022-10-10",
           exDate: "2022-10-11",
           dividendPerShare: 88,
@@ -36,7 +34,6 @@ describe("Dividend Cycle Detection & Next Cum Date Estimator", () => {
         },
         {
           ticker: "ASII",
-          companyName: "Astra International Tbk",
           cumDate: "2023-05-08",
           exDate: "2023-05-09",
           dividendPerShare: 552,
@@ -47,7 +44,6 @@ describe("Dividend Cycle Detection & Next Cum Date Estimator", () => {
         },
         {
           ticker: "ASII",
-          companyName: "Astra International Tbk",
           cumDate: "2023-10-12",
           exDate: "2023-10-13",
           dividendPerShare: 82,
@@ -58,7 +54,6 @@ describe("Dividend Cycle Detection & Next Cum Date Estimator", () => {
         },
         {
           ticker: "ASII",
-          companyName: "Astra International Tbk",
           cumDate: "2024-05-13",
           exDate: "2024-05-14",
           dividendPerShare: 421,
@@ -69,7 +64,6 @@ describe("Dividend Cycle Detection & Next Cum Date Estimator", () => {
         },
         {
           ticker: "ASII",
-          companyName: "Astra International Tbk",
           cumDate: "2024-10-11",
           exDate: "2024-10-14",
           dividendPerShare: 98,
@@ -92,7 +86,6 @@ describe("Dividend Cycle Detection & Next Cum Date Estimator", () => {
       const records: StockbitDividendRow[] = [
         {
           ticker: "PTBA",
-          companyName: "Bukit Asam Tbk",
           cumDate: "2022-06-24",
           exDate: "2022-06-27",
           dividendPerShare: 688,
@@ -103,7 +96,6 @@ describe("Dividend Cycle Detection & Next Cum Date Estimator", () => {
         },
         {
           ticker: "PTBA",
-          companyName: "Bukit Asam Tbk",
           cumDate: "2023-06-23",
           exDate: "2023-06-26",
           dividendPerShare: 1094,
@@ -114,7 +106,6 @@ describe("Dividend Cycle Detection & Next Cum Date Estimator", () => {
         },
         {
           ticker: "PTBA",
-          companyName: "Bukit Asam Tbk",
           cumDate: "2024-06-24",
           exDate: "2024-06-25",
           dividendPerShare: 397,

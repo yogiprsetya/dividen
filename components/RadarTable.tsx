@@ -169,7 +169,6 @@ export function RadarTable({ opportunities }: RadarTableProps) {
                   <tr className="border-t hover:bg-muted/30">
                     <td className="p-3 min-w-44">
                       <div className="font-medium">{opp.ticker}</div>
-                      <div className="text-xs text-muted-foreground">{opp.companyName}</div>
                     </td>
                     <td className="p-3 whitespace-nowrap"><StatusBadge status={opp.windowStatus} /></td>
                     <td className={NUMERIC_CELL}>{formatCurrency(opp.currentPrice)}</td>
@@ -215,7 +214,6 @@ export function RadarTable({ opportunities }: RadarTableProps) {
               <div className="flex items-start justify-between gap-2">
                 <div>
                   <div className="font-medium">{opp.ticker}</div>
-                  <div className="text-xs text-muted-foreground">{opp.companyName}</div>
                 </div>
                 <StatusBadge status={opp.windowStatus} />
               </div>

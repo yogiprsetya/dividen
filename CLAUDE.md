@@ -26,3 +26,20 @@
   Task: <gh issue link>
   MSG
 ```
+
+## Schema
+
+### Dividend
+
+## Struktur proyek
+
+```
+app/          halaman utama dan layout
+components/   komponen UI (Dropzone, FilterBar, RadarTable, SeasonalityChart, WatchlistExport, StatsOverview)
+lib/parser/   pembaca CSV, normalisasi tanggal dan angka, data contoh
+lib/engine/   deteksi siklus dividen, perkiraan Cum Date, klasifikasi buy window
+lib/utils/    format tanggal, angka, dan ekspor CSV
+test/         unit test parser dan engine
+```
+
+Spesifikasi lengkap ada di [SPEC.md](SPEC.md).

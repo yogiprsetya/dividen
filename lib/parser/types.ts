@@ -4,7 +4,6 @@
 export interface StockbitRawRow {
   Symbol?: string;
   Ticker?: string;
-  "Company Name"?: string;
   "Cum Date"?: string;
   "Ex Date"?: string;
   "Payment Date"?: string;
@@ -22,7 +21,6 @@ export interface StockbitRawRow {
  */
 export interface StockbitDividendRow {
   ticker: string;
-  companyName?: string;
   cumDate: string; // YYYY-MM-DD
   exDate: string; // YYYY-MM-DD
   paymentDate?: string; // YYYY-MM-DD
