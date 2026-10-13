@@ -43,6 +43,19 @@ describe("Home page", () => {
     expect(within(table).getByText("BBCA")).toBeInTheDocument();
   });
 
+  it("reports how many stocks the filters leave visible", async () => {
+    render(<Home />);
+    loadDemo();
+
+    expect(screen.getByText("Showing 6 of 6 stocks")).toBeInTheDocument();
+
+    fireEvent.change(screen.getByPlaceholderText(/Search ticker or company/i), {
+      target: { value: "BBCA" },
+    });
+
+    await waitFor(() => expect(screen.getByText("Showing 1 of 6 stocks")).toBeInTheDocument());
+  });
+
   it("returns to the empty state when data is cleared", () => {
     render(<Home />);
     loadDemo();

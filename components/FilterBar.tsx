@@ -21,7 +21,10 @@ interface FilterBarProps {
 
 const MONTH_ITEMS = [
   { value: "ALL", label: "All Months" },
-  ...INDONESIAN_MONTH_NAMES.map((label, i) => ({ value: String(i + 1), label })),
+  ...INDONESIAN_MONTH_NAMES.map((label, i) => ({
+    value: String(i + 1),
+    label,
+  })),
 ];
 
 export function FilterBar({ filters, onFilterChange }: FilterBarProps) {
@@ -58,6 +61,7 @@ export function FilterBar({ filters, onFilterChange }: FilterBarProps) {
   };
 
   const handleReset = () => {
+    setSearchValue("");
     onFilterChange({
       minYield: 0,
       targetMonth: "ALL",
@@ -75,6 +79,7 @@ export function FilterBar({ filters, onFilterChange }: FilterBarProps) {
           <label htmlFor="filter-search" className="sr-only">
             Search ticker or company
           </label>
+
           <Input
             id="filter-search"
             placeholder="Search ticker or company..."
@@ -83,34 +88,18 @@ export function FilterBar({ filters, onFilterChange }: FilterBarProps) {
             className="w-full"
           />
         </div>
+
         <Button variant="outline" onClick={handleReset}>
           Reset Filters
         </Button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div className="space-y-3">
-          <div className="flex justify-between">
-            <span id="filter-min-yield-label" className="text-sm font-medium">
-              Minimum Yield
-            </span>
-            <span className="text-sm text-muted-foreground">
-              {filters.minYield}%
-            </span>
-          </div>
-          <Slider
-            aria-labelledby="filter-min-yield-label"
-            value={[filters.minYield]}
-            onValueChange={handleMinYieldChange}
-            max={25}
-            step={0.5}
-          />
-        </div>
-
-        <div className="space-y-3">
+      <div className="flex items-end justify-between gap-6">
+        <div>
           <label htmlFor="filter-month" className="text-sm font-medium">
             Accumulation Month
           </label>
+
           <Select
             items={MONTH_ITEMS}
             value={filters.targetMonth.toString()}
@@ -119,6 +108,7 @@ export function FilterBar({ filters, onFilterChange }: FilterBarProps) {
             <SelectTrigger id="filter-month">
               <SelectValue placeholder="Select month" />
             </SelectTrigger>
+
             <SelectContent>
               {MONTH_ITEMS.map((month) => (
                 <SelectItem key={month.value} value={month.value}>
@@ -133,6 +123,7 @@ export function FilterBar({ filters, onFilterChange }: FilterBarProps) {
           <span id="filter-status-label" className="text-sm font-medium block">
             Window Status
           </span>
+
           <Tabs value={filters.status} onValueChange={handleStatusChange}>
             <TabsList
               aria-labelledby="filter-status-label"

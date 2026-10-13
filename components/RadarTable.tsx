@@ -28,6 +28,10 @@ const DEFAULT_DIRECTION: Record<SortBy, SortDirection> = {
   ticker: "asc",
 };
 
+// Numbers right-aligned on tabular figures so magnitudes line up down the column.
+const NUMERIC_CELL = "p-3 text-right tabular-nums whitespace-nowrap";
+const NUMERIC_HEAD = "px-3 py-2 text-right";
+
 const TYPE_LABEL = { INTERIM: "Interim", FINAL: "Final", UNKNOWN: "Unknown" } as const;
 
 function StatusBadge({ status }: { status: WindowStatus }) {
@@ -138,22 +142,22 @@ export function RadarTable({ opportunities }: RadarTableProps) {
     <>
       <div className="hidden md:block ring-1 ring-foreground/5 overflow-x-auto">
         <table className="w-full text-sm">
-          <thead className="bg-muted/50 text-left text-xs font-semibold uppercase tracking-widest">
+          <thead className="bg-muted/50 text-left text-xs font-semibold uppercase tracking-widest whitespace-nowrap">
             <tr>
               <th scope="col" aria-sort={ariaSort("ticker")} className="px-3 py-2">
                 {sortHeader("ticker", "Symbol")}
               </th>
               <th scope="col" className="px-3 py-2">Status</th>
-              <th scope="col" className="px-3 py-2">Price</th>
+              <th scope="col" className={NUMERIC_HEAD}>Price</th>
               <th scope="col" className="px-3 py-2">Est. Cum Date</th>
-              <th scope="col" aria-sort={ariaSort("daysToCumDate")} className="px-3 py-2">
+              <th scope="col" aria-sort={ariaSort("daysToCumDate")} className={NUMERIC_HEAD}>
                 {sortHeader("daysToCumDate", "Days to Cum Date")}
               </th>
-              <th scope="col" className="px-3 py-2">Est. DPS</th>
-              <th scope="col" aria-sort={ariaSort("yield")} className="px-3 py-2">
+              <th scope="col" className={NUMERIC_HEAD}>Est. DPS</th>
+              <th scope="col" aria-sort={ariaSort("yield")} className={NUMERIC_HEAD}>
                 {sortHeader("yield", "Est. Yield")}
               </th>
-              <th scope="col" className="px-3 py-2">Consistency</th>
+              <th scope="col" className={NUMERIC_HEAD}>Consistency</th>
               <th scope="col" className="px-3 py-2">Historical Payouts</th>
             </tr>
           </thead>
@@ -162,15 +166,15 @@ export function RadarTable({ opportunities }: RadarTableProps) {
               const isExpanded = expanded.has(opp.ticker);
               return (
                 <React.Fragment key={opp.ticker}>
-                  <tr className="border-t">
-                    <td className="p-3">
+                  <tr className="border-t hover:bg-muted/30">
+                    <td className="p-3 min-w-44">
                       <div className="font-medium">{opp.ticker}</div>
                       <div className="text-xs text-muted-foreground">{opp.companyName}</div>
                     </td>
-                    <td className="p-3"><StatusBadge status={opp.windowStatus} /></td>
-                    <td className="p-3">{formatCurrency(opp.currentPrice)}</td>
-                    <td className="p-3">{formatDateIndonesian(opp.estimatedNextCumDate)}</td>
-                    <td className="p-3">
+                    <td className="p-3 whitespace-nowrap"><StatusBadge status={opp.windowStatus} /></td>
+                    <td className={NUMERIC_CELL}>{formatCurrency(opp.currentPrice)}</td>
+                    <td className="p-3 whitespace-nowrap">{formatDateIndonesian(opp.estimatedNextCumDate)}</td>
+                    <td className={NUMERIC_CELL}>
                       {opp.daysToCumDate}
                       {opp.daysToWindowStart > 0 && (
                         <div className="text-xs text-muted-foreground">
@@ -178,9 +182,9 @@ export function RadarTable({ opportunities }: RadarTableProps) {
                         </div>
                       )}
                     </td>
-                    <td className="p-3">{formatCurrency(opp.estimatedDividendPerShare)}</td>
-                    <td className="p-3">{formatPercent(opp.estimatedYield)}</td>
-                    <td className="p-3">{Math.round(opp.historicalConsistency)}/100</td>
+                    <td className={NUMERIC_CELL}>{formatCurrency(opp.estimatedDividendPerShare)}</td>
+                    <td className={NUMERIC_CELL}>{formatPercent(opp.estimatedYield)}</td>
+                    <td className={NUMERIC_CELL}>{Math.round(opp.historicalConsistency)}/100</td>
                     <td className="p-3">
                       <HistoryToggle
                         opportunity={opp}
@@ -215,7 +219,7 @@ export function RadarTable({ opportunities }: RadarTableProps) {
                 </div>
                 <StatusBadge status={opp.windowStatus} />
               </div>
-              <dl className="grid grid-cols-3 gap-2 text-sm">
+              <dl className="grid grid-cols-3 gap-2 text-sm tabular-nums">
                 <div>
                   <dt className="text-xs text-muted-foreground">Est. Cum Date</dt>
                   <dd>{formatDateIndonesian(opp.estimatedNextCumDate, { shortMonth: true })}</dd>

@@ -94,7 +94,12 @@ export default function Home() {
           </div>
           <div className="space-y-4">
             <FilterBar filters={filters} onFilterChange={setFilters} />
-            <WatchlistExport opportunities={filtered} />
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <p className="text-sm text-muted-foreground tabular-nums">
+                Showing {filtered.length} of {opportunities.length} stocks
+              </p>
+              <WatchlistExport opportunities={filtered} />
+            </div>
             <RadarTable opportunities={filtered} />
           </div>
           <div className="space-y-4">

@@ -67,6 +67,15 @@ describe("SeasonalityChart", () => {
     expect(month("November")).toHaveAccessibleName(/1 buy window/);
   });
 
+  it("collapses months with no events to one muted line", () => {
+    render(<SeasonalityChart opportunities={[makeOpportunity("ASII", "2026-06-10")]} />);
+
+    expect(within(month("Agustus")).getByText("No events")).toBeInTheDocument();
+    expect(within(month("Agustus")).queryByText(/buy windows/)).not.toBeInTheDocument();
+    expect(month("Agustus")).toHaveAccessibleName(/0 cum dates, 0 buy windows/);
+    expect(within(month("Juni")).queryByText("No events")).not.toBeInTheDocument();
+  });
+
   it("shows an empty message when there are no opportunities", () => {
     render(<SeasonalityChart opportunities={[]} />);
     expect(screen.getByText(/no dividend events/i)).toBeInTheDocument();

@@ -39,7 +39,7 @@ describe("WatchlistExport", () => {
     fireEvent.click(screen.getByRole("button", { name: /copy tickers/i }));
 
     await waitFor(() => expect(writeText).toHaveBeenCalledWith("ASII,BBCA,BBRI"));
-    expect(await screen.findByRole("status")).toHaveTextContent("Copied 3 tickers");
+    await waitFor(() => expect(screen.getByRole("status")).toHaveTextContent("Copied 3 tickers"));
   });
 
   it("clears the status message 3000 ms after it is set", async () => {
@@ -72,7 +72,7 @@ describe("WatchlistExport", () => {
 
     fireEvent.click(screen.getByRole("button", { name: /copy tickers/i }));
 
-    expect(await screen.findByRole("status")).toHaveTextContent(/could not copy/i);
+    await waitFor(() => expect(screen.getByRole("status")).toHaveTextContent(/could not copy/i));
   });
 
   it("downloads only the filtered opportunities as a CSV file", async () => {

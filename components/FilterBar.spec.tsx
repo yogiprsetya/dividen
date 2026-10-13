@@ -1,9 +1,14 @@
-import { render, screen, fireEvent } from "@testing-library/react";
-import { describe, it, expect, vi } from "vitest";
+import { useState } from "react";
+import { render, screen, fireEvent, act } from "@testing-library/react";
+import { afterEach, describe, it, expect, vi } from "vitest";
 import { FilterBar } from "./FilterBar";
 import type { FilterOptions } from "@/lib/engine/types";
 
 describe("FilterBar", () => {
+  afterEach(() => {
+    vi.useRealTimers();
+  });
+
   const defaultFilters: FilterOptions = {
     minYield: 0,
     targetMonth: "ALL",
@@ -89,6 +94,28 @@ describe("FilterBar", () => {
     fireEvent.click(resetButton);
 
     expect(onFilterChange).toHaveBeenCalledWith(defaultFilters);
+  });
+
+  it("clears the search box on reset so the old query is not re-applied", () => {
+    vi.useFakeTimers();
+    const seen: FilterOptions[] = [];
+    function Harness() {
+      const [filters, setFilters] = useState(defaultFilters);
+      seen.push(filters);
+      return <FilterBar filters={filters} onFilterChange={setFilters} />;
+    }
+    render(<Harness />);
+    const search = screen.getByLabelText(/Search ticker or company/i);
+
+    fireEvent.change(search, { target: { value: "BB" } });
+    act(() => vi.advanceTimersByTime(300));
+    expect(seen.at(-1)?.searchQuery).toBe("BB");
+
+    fireEvent.click(screen.getByRole("button", { name: /Reset Filters/i }));
+    act(() => vi.advanceTimersByTime(300));
+
+    expect(search).toHaveValue("");
+    expect(seen.at(-1)?.searchQuery).toBe("");
   });
 
   it("renders the container without radius or shadow", () => {

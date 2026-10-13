@@ -65,6 +65,7 @@ export function SeasonalityChart({ opportunities }: SeasonalityChartProps) {
           const name = INDONESIAN_MONTH_NAMES[i];
           const cumLabel = plural(bucket.cumTickers.length, "cum date");
           const windowLabel = plural(bucket.windowCount, "buy window");
+          const isQuiet = bucket.windowCount === 0 && bucket.cumTickers.length === 0;
           return (
             <li
               key={name}
@@ -74,34 +75,41 @@ export function SeasonalityChart({ opportunities }: SeasonalityChartProps) {
               <div
                 className={cn(
                   "font-medium",
+                  isQuiet && "text-muted-foreground",
                   i === currentMonth && "inline-block border-b-2 border-foreground"
                 )}
               >
                 {name}
               </div>
-              <div aria-hidden className="h-2 bg-muted">
-                <div
-                  className="h-full bg-chart-1"
-                  style={{ width: `${(bucket.windowCount / maxWindows) * 100}%` }}
-                />
-              </div>
-              <div aria-hidden className="h-2 bg-muted">
-                <div
-                  className="h-full bg-chart-2"
-                  style={{ width: `${(bucket.cumTickers.length / maxCumDates) * 100}%` }}
-                />
-              </div>
-              <div className="text-muted-foreground">{windowLabel}</div>
-              <div className="text-muted-foreground">{cumLabel}</div>
-              {bucket.cumTickers.length > 0 && (
-                <ul className="flex flex-wrap gap-x-3 gap-y-1 font-medium">
-                  {bucket.cumTickers.map((t, n) => (
-                    <li key={t}>
-                      {n > 0 && <span aria-hidden>· </span>}
-                      {t}
-                    </li>
-                  ))}
-                </ul>
+              {isQuiet ? (
+                <div className="text-muted-foreground">No events</div>
+              ) : (
+                <>
+                  <div aria-hidden className="h-2 bg-muted">
+                    <div
+                      className="h-full bg-chart-1"
+                      style={{ width: `${(bucket.windowCount / maxWindows) * 100}%` }}
+                    />
+                  </div>
+                  <div aria-hidden className="h-2 bg-muted">
+                    <div
+                      className="h-full bg-chart-2"
+                      style={{ width: `${(bucket.cumTickers.length / maxCumDates) * 100}%` }}
+                    />
+                  </div>
+                  <div className="text-muted-foreground">{windowLabel}</div>
+                  <div className="text-muted-foreground">{cumLabel}</div>
+                  {bucket.cumTickers.length > 0 && (
+                    <ul className="flex flex-wrap gap-x-3 gap-y-1 font-medium">
+                      {bucket.cumTickers.map((t, n) => (
+                        <li key={t}>
+                          {n > 0 && <span aria-hidden>· </span>}
+                          {t}
+                        </li>
+                      ))}
+                    </ul>
+                  )}
+                </>
               )}
             </li>
           );
