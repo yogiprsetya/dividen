@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/select";
 import type { FilterOptions, WindowStatus } from "@/lib/engine/types";
 import { INDONESIAN_MONTH_NAMES } from "@/lib/utils/date";
+import { Label } from "./ui/label";
 
 interface FilterBarProps {
   filters: FilterOptions;
@@ -73,12 +74,12 @@ export function FilterBar({ filters, onFilterChange }: FilterBarProps) {
   };
 
   return (
-    <div className="space-y-4 p-4 bg-card ring-1 ring-foreground/5">
-      <div className="flex flex-col md:flex-row gap-4 items-start md:items-center justify-between">
+    <div className="space-y-8 p-4 bg-card ring-1 ring-foreground/5">
+      <div className="flex gap-4 items-center justify-between">
         <div className="flex-1 w-full md:max-w-sm">
-          <label htmlFor="filter-search" className="sr-only">
+          <Label htmlFor="filter-search" className="sr-only">
             Search ticker or company
-          </label>
+          </Label>
 
           <Input
             id="filter-search"
@@ -94,18 +95,36 @@ export function FilterBar({ filters, onFilterChange }: FilterBarProps) {
         </Button>
       </div>
 
-      <div className="flex items-end justify-between gap-6">
+      <div className="flex justify-between gap-6">
+        <div className="w-44">
+          <div className="flex justify-between mb-4">
+            <Label id="filter-min-yield-label">Minimum Yield</Label>
+
+            <span className="text-sm text-muted-foreground">
+              {filters.minYield}%
+            </span>
+          </div>
+
+          <Slider
+            aria-labelledby="filter-min-yield-label"
+            value={[filters.minYield]}
+            onValueChange={handleMinYieldChange}
+            max={25}
+            step={0.5}
+          />
+        </div>
+
         <div>
-          <label htmlFor="filter-month" className="text-sm font-medium">
+          <Label htmlFor="filter-month" className="mb-3">
             Accumulation Month
-          </label>
+          </Label>
 
           <Select
             items={MONTH_ITEMS}
             value={filters.targetMonth.toString()}
             onValueChange={handleMonthChange}
           >
-            <SelectTrigger id="filter-month">
+            <SelectTrigger id="filter-month" className="w-44">
               <SelectValue placeholder="Select month" />
             </SelectTrigger>
 
@@ -119,10 +138,10 @@ export function FilterBar({ filters, onFilterChange }: FilterBarProps) {
           </Select>
         </div>
 
-        <div className="space-y-3">
-          <span id="filter-status-label" className="text-sm font-medium block">
+        <div>
+          <Label id="filter-status-label" className="mb-3">
             Window Status
-          </span>
+          </Label>
 
           <Tabs value={filters.status} onValueChange={handleStatusChange}>
             <TabsList
